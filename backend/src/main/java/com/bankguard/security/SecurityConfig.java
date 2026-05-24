@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/ws/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/transactions/analyze").permitAll() // Allow simulator to post without JWT if needed, or secure it as standard
+                .requestMatchers(HttpMethod.GET, "/api/transactions/streaming/status").permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/transactions/upload").hasRole("ADMIN")
                 .anyRequest().authenticated()

@@ -1,0 +1,91 @@
+/* Shared User Stylesheet for FraudGuard AI */
+
+body {
+    background-color: #051424;
+    color: #d4e4fa;
+    font-family: 'Inter', sans-serif;
+}
+
+.glass-panel {
+    background: rgba(18, 33, 49, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(173, 198, 255, 0.1);
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.scanner-glow {
+    box-shadow: 0 0 15px rgba(78, 222, 163, 0.2);
+}
+
+.cyber-grid {
+    background-image: radial-gradient(rgba(173, 198, 255, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+/* Material Symbols Adjustments */
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Fade-in and scale-up animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.scale-up {
+    animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-spin-custom {
+    animation: spin 1s linear infinite;
+}
+
+/* Custom Scrollbar for premium dark aesthetic */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #051424;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1c2b3c;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #273647;
+}

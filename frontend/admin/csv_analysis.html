@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>FraudGuard AI - Analyse Batch</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts and Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Shared Stylesheet -->
+    <link href="css/admin_shared.css" rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002113",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "outline-variant": "#424754",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#ffb2b7",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-bright": "#2c3a4c",
+                        "primary": "#adc6ff",
+                        "surface-variant": "#273647",
+                        "surface-dim": "#051424",
+                        "outline": "#8c909f",
+                        "on-tertiary-container": "#5b0017",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#001a42",
+                        "on-error": "#690005",
+                        "surface-container": "#122131",
+                        "surface-tint": "#adc6ff",
+                        "on-tertiary": "#67001b",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#233143",
+                        "inverse-primary": "#005ac2",
+                        "on-secondary-container": "#00311f",
+                        "surface-container-highest": "#273647",
+                        "on-tertiary-fixed": "#40000d",
+                        "on-primary": "#002e6a",
+                        "on-background": "#d4e4fa",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "background": "#051424",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed-variant": "#004395",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#1c2b3c",
+                        "secondary": "#4edea3",
+                        "on-secondary": "#003824",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-container": "#ff516a",
+                        "on-surface": "#d4e4fa",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-surface": "#d4e4fa",
+                        "tertiary-fixed": "#ffdadb",
+                        "surface-container-low": "#0d1c2d",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "surface": "#051424",
+                        "secondary-container": "#00a572"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "gutter": "20px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background selection:bg-primary/30 min-h-screen">
+
+    <!-- Unified Header -->
+    <header
+        class="bg-surface-container/80 text-primary border-b border-outline-variant/10 backdrop-blur-xl shadow-sm flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50">
+        <div class="flex items-center gap-8">
+            <!-- Logo / Brand -->
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
+                    <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">security</span>
+                </div>
+                <div>
+                    <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
+                        AI</span>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex gap-6 items-center h-full">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/index.html">Accueil</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/admin/admin_dashboard.html">Surveillance Live</a>
+                <a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1"
+                    href="/admin/csv_analysis.html">Analyse Batch CSV</a>
+            </nav>
+        </div>
+
+        <!-- Header Right (Controls, Profile) -->
+        <div class="flex items-center gap-4">
+            <!-- Notifications -->
+            <div class="relative group">
+                <span
+                    class="material-symbols-outlined text-on-surface-variant cursor-pointer p-2 hover:bg-white/5 rounded-full transition-all active:scale-95">notifications</span>
+                <span
+                    class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full border-2 border-surface-container"></span>
+            </div>
+
+
+            <!-- Logout -->
+            <button id="logout-btn"
+                class="p-2 text-on-surface-variant hover:text-error hover:bg-white/5 rounded-full transition-all"
+                title="Déconnexion">
+                <span class="material-symbols-outlined">logout</span>
+            </button>
+
+            <!-- Profile info -->
+            <div class="flex items-center gap-md ml-md border-l border-outline-variant/20 pl-md">
+                <div class="text-right hidden lg:block">
+                    <p class="font-label-md text-label-md font-bold text-on-surface" id="profile-username">Admin</p>
+                    <p class="font-label-sm text-[10px] text-outline">Analyste Sécurité</p>
+                </div>
+                <div class="w-9 h-9 rounded-full border border-primary/30 overflow-hidden">
+                    <img alt="Security Analyst Profile" class="w-full h-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTmZeCwK4DMyXGAFXaYASPPqB7b9Nt0Q3JQD6tdP8lbCL1uQDP6tv9MPiBmekDzGZhMypsnp42wABU27cp2vTmdIdPfnSrYZlKsEZYt9cNOh127QDfdK_lToPwySxxnZ7mG6FpRNOI4_5nRRK-CEibyKHkXHuX43I7IJCqSWZFgbEasLlDfAQ9iw5gxTKos0BPqGd6PEMK9P1DQ0iEiQpqM3iypLPMnOSxNETJ91cac3yD3pknBkoy28XdKbEmENDWwGmJ_FPohe83">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1440px] mx-auto p-margin-desktop flex flex-col gap-lg">
+        <!-- Header Section with Status -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md">
+            <div>
+                <h1 class="font-headline-lg text-headline-lg text-on-surface">Analyse Batch CSV</h1>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Importez vos fichiers de
+                    transactions pour une analyse groupée haute performance. Notre moteur d'IA identifie les anomalies
+                    en temps réel.</p>
+            </div>
+            <div class="flex flex-wrap gap-sm">
+                <div
+                    class="px-3 py-1.5 rounded-full bg-secondary/10 border border-secondary/20 flex items-center gap-2">
+                    <span class="status-dot bg-secondary animate-pulse-subtle"></span>
+                    <span class="font-label-md text-label-md text-secondary">Modèle XGBoost actif</span>
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 flex items-center gap-2">
+                    <span class="status-dot bg-primary"></span>
+                    <span class="font-label-md text-label-md text-primary">Neo4j Sync</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import & Stats Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <!-- Drag & Drop Zone -->
+            <div id="csv-drop-zone"
+                class="lg:col-span-8 glass-panel rounded-xl p-xl flex flex-col items-center justify-center border-dashed border-2 border-outline/30 hover:border-primary/50 transition-all group cursor-pointer relative overflow-hidden">
+                <input type="file" id="csv-file-input" class="hidden" accept=".csv">
+                <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div
+                        class="w-16 h-16 rounded-full bg-surface-container-high flex items-center justify-center mb-md group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-primary text-4xl">cloud_upload</span>
+                    </div>
+                    <h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Glisser-déposer votre fichier
+                        CSV</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-lg">Ou cliquez pour parcourir vos
+                        dossiers (Max 500MB)</p>
+                    <button id="csv-select-btn"
+                        class="bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md px-lg py-3 rounded-lg shadow-[0_0_12px_rgba(173,198,255,0.3)] transition-all active:scale-95">
+                        SÉLECTIONNER UN FICHIER
+                    </button>
+                </div>
+            </div>
+
+            <!-- Side Progress/Info Panel -->
+            <div class="lg:col-span-4 flex flex-col gap-gutter">
+                <div class="glass-panel rounded-xl p-lg">
+                    <div class="flex justify-between items-center mb-md">
+                        <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest"
+                            id="progress-title">Import inactif</span>
+                        <span class="font-label-md text-label-md text-secondary" id="progress-pct">0%</span>
+                    </div>
+                    <div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden mb-md">
+                        <div id="progress-bar"
+                            class="h-full bg-secondary w-[0%] transition-all duration-300 ease-out shadow-[0_0_8px_rgba(78,222,163,0.5)]">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-on-surface-variant mb-2">
+                        <span class="material-symbols-outlined text-sm">description</span>
+                        <span id="file-name-label" class="font-label-sm text-label-sm">Aucun fichier</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-on-surface-variant">
+                        <span class="material-symbols-outlined text-sm">timer</span>
+                        <span id="status-label" class="font-label-sm text-label-sm">Prêt pour import</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl p-lg flex flex-col gap-md">
+                    <h4 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Résumé de
+                        la Session</h4>
+                    <div class="grid grid-cols-2 gap-md">
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-label-sm text-outline">Analysées</span>
+                            <span id="parsed-count" class="font-headline-sm text-headline-sm text-on-surface">0</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-label-sm text-label-sm text-outline">Suspectes</span>
+                            <span id="fraud-count" class="font-headline-sm text-headline-sm text-error">0</span>
+                        </div>
+                    </div>
+                    <button onclick="window.location.reload()"
+                        class="w-full border border-primary text-primary hover:bg-primary/10 font-label-md text-label-md py-2.5 rounded-lg transition-all">
+                        RÉINITIALISER L'IMPORT
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results Table Section -->
+        <section class="glass-panel rounded-xl overflow-hidden shadow-xl neo-glow-top-success">
+            <div
+                class="p-lg border-b border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-md">
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">Résultats de l'Analyse</h3>
+                <div class="flex items-center gap-sm w-full md:w-auto">
+                    <div
+                        class="bg-surface-dim border border-outline/30 rounded-lg px-3 py-1.5 flex items-center gap-2 focus-within:border-primary transition-all w-full md:w-64">
+                        <span class="material-symbols-outlined text-on-surface-variant text-md">search</span>
+                        <input id="csv-search"
+                            class="bg-transparent border-none focus:ring-0 text-sm w-full font-label-md outline-none text-on-surface"
+                            placeholder="Filtrer ID, Nom, Marchand..." type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-surface-container-high/50 font-label-md text-label-md text-outline">
+                        <tr>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider">Transaction ID</th>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider">Horodatage</th>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider">Montant</th>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider">Score Risque</th>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider">Statut</th>
+                            <th class="px-lg py-4 font-medium uppercase tracking-wider text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-body-md text-body-md divide-y divide-white/5" id="csv-results-rows">
+                        <tr class="hover:bg-white/5 transition-colors group">
+                            <td colspan="6" class="px-lg py-8 text-center text-on-surface-variant font-label-md">
+                                Sélectionnez un fichier CSV pour démarrer l'analyse de batch.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-lg flex justify-between items-center border-t border-white/5">
+                <span id="csv-pagination-label" class="font-label-sm text-label-sm text-on-surface-variant">Affichage de
+                    0 à 0 sur 0 résultats</span>
+            </div>
+        </section>
+
+        <!-- Technical Metadata Bento Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-xl">
+            <div class="glass-panel p-lg rounded-xl flex items-center gap-md">
+                <div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary">memory</span>
+                </div>
+                <div>
+                    <h5 class="font-label-md text-label-md text-outline">CPU UTILIZATION</h5>
+                    <p class="font-headline-sm text-headline-sm text-on-surface">24.5% <span
+                            class="text-label-sm text-secondary font-bold">OPTIMAL</span></p>
+                </div>
+            </div>
+            <div class="glass-panel p-lg rounded-xl flex items-center gap-md">
+                <div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">hub</span>
+                </div>
+                <div>
+                    <h5 class="font-label-md text-label-md text-outline">GRAPH ENTITIES</h5>
+                    <p class="font-headline-sm text-headline-sm text-on-surface">1.2M <span
+                            class="text-label-sm text-primary font-bold">SYNCED</span></p>
+                </div>
+            </div>
+            <div class="glass-panel p-lg rounded-xl flex items-center gap-md">
+                <div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center">
+                    <span class="material-symbols-outlined text-tertiary-container">security</span>
+                </div>
+                <div>
+                    <h5 class="font-label-md text-label-md text-outline">LATENCY</h5>
+                    <p class="font-headline-sm text-headline-sm text-on-surface">12ms <span
+                            class="text-label-sm text-tertiary-container font-bold">STABLE</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- External Script -->
+    <script src="js/csv_analysis.js"></script>
+</body>
+
+</html>

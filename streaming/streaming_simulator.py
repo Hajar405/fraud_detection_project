@@ -70,6 +70,8 @@ def stream_transactions():
         print(f"❌ Error: CSV file not found at {CSV_PATH}")
         return
 
+    STATUS_URL = os.getenv("STATUS_URL", "http://backend:8080/api/transactions/streaming/status")
+
     while True:
         try:
             with open(CSV_PATH, "r", encoding="utf-8") as f:
@@ -80,6 +82,28 @@ def stream_transactions():
             random.shuffle(data_lines) # Shuffle transactions for realistic stream
             
             for line in data_lines:
+                # Check status first
+                is_enabled = True
+                while True:
+                    try:
+                        status_res = requests.get(STATUS_URL, timeout=5)
+                        if status_res.ok:
+                            is_enabled = status_res.json().get("enabled", True)
+                            if not is_enabled:
+                                print("Streaming paused by admin. Waiting 5 seconds...")
+                                time.sleep(5)
+                                continue # loop back to check again
+                            else:
+                                break # enabled, break out of while loop
+                        else:
+                            break # if error getting status, assume enabled
+                    except Exception as e:
+                        print(f"⚠️ Could not check streaming status: {e}")
+                        break # if error, assume enabled
+
+                if not is_enabled:
+                    continue # safety catch
+
                 row = parse_line(line)
                 if not row:
                     continue

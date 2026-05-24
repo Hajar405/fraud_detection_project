@@ -48,4 +48,15 @@ public class AdminController {
             return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));
         }
     }
+
+    @GetMapping("/streaming/status")
+    public ResponseEntity<?> getStreamingStatus() {
+        return ResponseEntity.ok(Map.of("enabled", databaseService.isStreamingEnabled()));
+    }
+
+    @PostMapping("/streaming/toggle")
+    public ResponseEntity<?> toggleStreaming() {
+        boolean status = databaseService.toggleStreaming();
+        return ResponseEntity.ok(Map.of("enabled", status));
+    }
 }

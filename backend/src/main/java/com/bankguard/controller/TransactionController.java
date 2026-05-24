@@ -137,6 +137,11 @@ public class TransactionController {
         }
     }
 
+    @GetMapping("/streaming/status")
+    public ResponseEntity<?> getStreamingStatus() {
+        return ResponseEntity.ok(Map.of("enabled", databaseService.isStreamingEnabled()));
+    }
+
     @GetMapping("/history")
     public ResponseEntity<?> getHistory() {
         try {

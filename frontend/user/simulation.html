@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard AI - Analyser une Transaction</title>
+    <meta name="description"
+        content="Simulez et analysez vos transactions bancaires grâce à notre modèle IA de détection de fraude en temps réel.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind Theme Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002113",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "outline-variant": "#424754",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#ffb2b7",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-bright": "#2c3a4c",
+                        "primary": "#adc6ff",
+                        "surface-variant": "#273647",
+                        "surface-dim": "#051424",
+                        "outline": "#8c909f",
+                        "on-tertiary-container": "#5b0017",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#001a42",
+                        "on-error": "#690005",
+                        "surface-container": "#122131",
+                        "surface-tint": "#adc6ff",
+                        "on-tertiary": "#67001b",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#233143",
+                        "inverse-primary": "#005ac2",
+                        "on-secondary-container": "#00311f",
+                        "surface-container-highest": "#273647",
+                        "on-tertiary-fixed": "#40000d",
+                        "on-primary": "#002e6a",
+                        "on-background": "#d4e4fa",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "background": "#051424",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed-variant": "#004395",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#1c2b3c",
+                        "secondary": "#4edea3",
+                        "on-secondary": "#003824",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-container": "#ff516a",
+                        "on-surface": "#d4e4fa",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-surface": "#d4e4fa",
+                        "tertiary-fixed": "#ffdadb",
+                        "surface-container-low": "#0d1c2d",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "surface": "#051424",
+                        "secondary-container": "#00a572"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "gutter": "20px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <!-- Shared User Styles -->
+    <link rel="stylesheet" href="css/user_shared.css">
+</head>
+
+<body class="bg-background text-on-surface font-body-md min-h-screen cyber-grid">
+
+    <!-- ============================================================
+     HEADER (identical across all user pages)
+     ============================================================ -->
+    <header
+        class="flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm">
+        <div class="flex items-center gap-xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
+                    <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">security</span>
+                </div>
+                <div>
+                    <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
+                        AI</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-lg" id="user-nav">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/index.html" id="nav-home">Accueil</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/user/user_dashboard.html" id="nav-dashboard">Dashboard</a>
+                <a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1"
+                    href="/user/simulation.html" id="nav-simulate">Analyser</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-md">
+            <div class="text-right hidden lg:block mr-2">
+                <p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">Chargement...
+                </p>
+                <p id="user-display-role" class="font-label-sm text-[10px] text-outline">Utilisateur</p>
+            </div>
+            <button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full"
+                title="Déconnexion">
+                <span class="material-symbols-outlined text-primary">logout</span>
+            </button>
+            <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
+                <img alt="User Profile Picture"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI">
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+    <main class="max-w-[1440px] mx-auto p-margin-desktop flex gap-gutter">
+        <div class="flex-grow">
+            <div class="max-w-2xl mx-auto flex flex-col gap-gutter">
+
+                <!-- Transaction Analysis Card -->
+                <section class="glass-panel rounded-xl p-lg relative overflow-hidden" id="main-card">
+                    <div class="flex items-center gap-2 mb-lg border-b border-white/5 pb-4" id="card-header">
+                        <span class="material-symbols-outlined text-secondary">add_card</span>
+                        <h2 class="font-headline-sm text-headline-sm">Nouvelle Transaction</h2>
+                    </div>
+
+                    <!-- Results Overlay (hidden by default) -->
+                    <div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-surface-container/60 backdrop-blur-md z-20"
+                        id="results-overlay">
+                        <!-- Success State -->
+                        <div class="hidden flex flex-col items-center gap-4 fade-in" id="state-success">
+                            <div
+                                class="w-20 h-20 rounded-full bg-secondary/20 flex items-center justify-center border-2 border-secondary scale-up">
+                                <span class="material-symbols-outlined text-secondary text-5xl font-bold">check</span>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="font-headline-md text-secondary">Transaction Validée</h3>
+                                <p class="text-on-surface-variant font-body-md mt-2">Aucune anomalie détectée par l'IA.
+                                </p>
+                            </div>
+                            <button
+                                class="mt-4 px-6 py-2 border border-secondary/30 text-secondary rounded-lg hover:bg-secondary/10 transition-colors font-label-md"
+                                onclick="resetForm()">Nouvelle analyse</button>
+                        </div>
+                        <!-- Error State -->
+                        <div class="hidden flex flex-col items-center gap-4 fade-in" id="state-error">
+                            <div
+                                class="w-20 h-20 rounded-full bg-error/20 flex items-center justify-center border-2 border-error scale-up">
+                                <span class="material-symbols-outlined text-error text-5xl font-bold">gpp_maybe</span>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="font-headline-md text-error">Alerte de Fraude Détectée</h3>
+                                <p class="text-on-surface-variant font-body-md mt-2">Activité suspecte identifiée sur ce
+                                    compte.</p>
+                            </div>
+                            <button
+                                class="mt-4 px-6 py-2 border border-error/30 text-error rounded-lg hover:bg-error/10 transition-colors font-label-md"
+                                onclick="resetForm()">Ignorer &amp; Réessayer</button>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Form -->
+                    <form class="space-y-md" id="transaction-form">
+                        <div class="grid grid-cols-1 gap-md">
+                            <div>
+                                <label class="block font-label-md text-label-md text-outline mb-1">Nom complet</label>
+                                <input id="sim-fullname"
+                                    class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all"
+                                    placeholder="Nom complet" required type="text">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-label-md text-outline mb-1">Numéro de carte</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-3 text-outline">credit_card</span>
+                                <input id="sim-cardnumber"
+                                    class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 pl-10 pr-4 focus:border-primary outline-none transition-all"
+                                    placeholder="XXXX XXXX XXXX XXXX" required type="text">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-label-md text-outline mb-1">Merchant</label>
+                            <input id="sim-merchant"
+                                class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all"
+                                placeholder="Nom du marchand" required type="text">
+                        </div>
+                        <div class="space-y-sm">
+                            <p class="font-label-md text-label-md text-outline">Adresse</p>
+                            <div class="grid grid-cols-2 gap-md">
+                                <input id="sim-state"
+                                    class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all"
+                                    placeholder="État/Région (ex: FR)" type="text">
+                                <input id="sim-city"
+                                    class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all"
+                                    placeholder="Ville" type="text">
+                            </div>
+                            <input id="sim-street"
+                                class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all"
+                                placeholder="Rue" type="text">
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-label-md text-outline mb-1">Catégorie /
+                                Raison</label>
+                            <select id="sim-category"
+                                class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 text-on-surface focus:border-primary outline-none transition-all">
+                                <option value="entertainment">Divertissement</option>
+                                <option value="food_dining">Restauration</option>
+                                <option value="gas_transport">Transport &amp; Essence</option>
+                                <option value="grocery_net">Épicerie</option>
+                                <option value="shopping_net">Shopping en ligne</option>
+                                <option value="personal_care">Soin Personnel</option>
+                                <option value="health_fitness">Santé &amp; Fitness</option>
+                                <option value="travel">Voyage</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-label-md text-label-md text-outline mb-1">Montant (€)</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-3 text-outline">euro</span>
+                                <input id="sim-amount"
+                                    class="w-full bg-background border border-outline-variant/30 rounded-lg font-label-md text-label-md py-3 pl-10 pr-4 focus:border-primary outline-none transition-all"
+                                    placeholder="0.00" required type="number" step="0.01">
+                            </div>
+                        </div>
+                        <button
+                            class="w-full bg-primary text-on-primary py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all mt-4 scanner-glow"
+                            id="submit-btn" type="submit">
+                            <span class="material-symbols-outlined" id="btn-icon">security</span>
+                            <span id="btn-text">Analyser &amp; Transférer</span>
+                            <div class="hidden" id="btn-loader">
+                                <svg class="animate-spin-custom h-5 w-5 text-on-primary" fill="none" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </form>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Page-specific JS -->
+    <script src="js/simulation.js"></script>
+</body>
+
+</html>

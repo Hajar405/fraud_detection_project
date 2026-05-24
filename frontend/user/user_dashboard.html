@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="dark" lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudGuard AI - Mon Dashboard</title>
+    <meta name="description"
+        content="Consultez votre historique de transactions et le statut de votre compte en toute sécurité.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Hanken+Grotesk:wght@600;700;800&family=JetBrains+Mono:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- SockJS / STOMP for real-time transactions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <!-- Tailwind Theme Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed": "#002113",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "outline-variant": "#424754",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-primary-container": "#00285d",
+                        "tertiary": "#ffb2b7",
+                        "surface-container-lowest": "#010f1f",
+                        "surface-bright": "#2c3a4c",
+                        "primary": "#adc6ff",
+                        "surface-variant": "#273647",
+                        "surface-dim": "#051424",
+                        "outline": "#8c909f",
+                        "on-tertiary-container": "#5b0017",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-fixed": "#001a42",
+                        "on-error": "#690005",
+                        "surface-container": "#122131",
+                        "surface-tint": "#adc6ff",
+                        "on-tertiary": "#67001b",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#233143",
+                        "inverse-primary": "#005ac2",
+                        "on-secondary-container": "#00311f",
+                        "surface-container-highest": "#273647",
+                        "on-tertiary-fixed": "#40000d",
+                        "on-primary": "#002e6a",
+                        "on-background": "#d4e4fa",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "primary-fixed-dim": "#adc6ff",
+                        "background": "#051424",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-primary-fixed-variant": "#004395",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#1c2b3c",
+                        "secondary": "#4edea3",
+                        "on-secondary": "#003824",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary-container": "#ff516a",
+                        "on-surface": "#d4e4fa",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-surface": "#d4e4fa",
+                        "tertiary-fixed": "#ffdadb",
+                        "surface-container-low": "#0d1c2d",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "surface": "#051424",
+                        "secondary-container": "#00a572"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "gutter": "20px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "sm": "8px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "12px", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+
+    <!-- Shared User Styles -->
+    <link rel="stylesheet" href="css/user_shared.css">
+</head>
+
+<body class="bg-background text-on-surface font-body-md min-h-screen cyber-grid">
+
+    <!-- ============================================================
+     HEADER (identical across all user pages)
+     ============================================================ -->
+    <header
+        class="flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm">
+        <div class="flex items-center gap-xl">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
+                    <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">security</span>
+                </div>
+                <div>
+                    <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
+                        AI</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-lg" id="user-nav">
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/index.html" id="nav-home">Accueil</a>
+                <a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1"
+                    href="/user/user_dashboard.html" id="nav-dashboard">Dashboard</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
+                    href="/user/simulation.html" id="nav-simulate">Analyser</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-md">
+            <div class="text-right hidden lg:block mr-2">
+                <p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">Chargement...
+                </p>
+                <p id="user-display-role" class="font-label-sm text-[10px] text-outline">Utilisateur</p>
+            </div>
+            <button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full"
+                title="Déconnexion">
+                <span class="material-symbols-outlined text-primary">logout</span>
+            </button>
+            <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
+                <img alt="User Profile Picture"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI">
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+    <main class="max-w-[1440px] mx-auto p-margin-desktop flex gap-gutter">
+        <div class="flex-grow max-w-5xl mx-auto">
+            <div class="grid gap-gutter grid-cols-1">
+                <div class="col-span-12 flex flex-col gap-gutter lg:col-span-12">
+
+                    <!-- User Summary Panel -->
+                    <section
+                        class="glass-panel rounded-xl p-lg flex flex-col md:flex-row gap-lg justify-between items-center mb-6">
+                        <div class="flex items-center gap-md">
+                            <div
+                                class="w-16 h-16 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-primary text-4xl">account_circle</span>
+                            </div>
+                            <div>
+                                <h2 id="summary-fullname" class="font-headline-sm text-headline-sm text-on-surface">
+                                    Chargement...</h2>
+                                <p id="summary-card"
+                                    class="font-label-md text-label-md text-on-surface-variant uppercase mt-1">CARTE :
+                                    **** **** **** ****</p>
+                                <div class="flex gap-md text-xs text-outline mt-1 flex-wrap">
+                                    <span id="summary-email">...</span>
+                                    <span>•</span>
+                                    <span id="summary-phone">...</span>
+                                    <span>•</span>
+                                    <span id="summary-address">...</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="summary-status-card"
+                            class="px-xl py-3 rounded-lg border-l-4 flex items-center gap-md shadow-lg transition-all duration-500 bg-secondary/10 border-secondary">
+                            <span class="relative flex h-3.5 w-3.5">
+                                <span id="summary-status-ping"
+                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                                <span id="summary-status-dot"
+                                    class="relative inline-flex rounded-full h-3.5 w-3.5 bg-secondary"></span>
+                            </span>
+                            <span id="summary-status-text"
+                                class="font-label-md text-label-md text-secondary uppercase tracking-widest font-bold">COMPTE
+                                SÉCURISÉ</span>
+                        </div>
+                    </section>
+
+                    <!-- History Table -->
+                    <section class="glass-panel rounded-xl flex-grow overflow-hidden">
+                        <div class="p-lg border-b border-white/5 flex justify-between items-center">
+                            <h2 class="font-headline-sm text-headline-sm">Historique Personnel</h2>
+                            <button
+                                class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                                Voir tout <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left">
+                                <thead class="bg-surface-container-highest/30">
+                                    <tr>
+                                        <th class="px-lg py-4 font-label-sm text-label-sm text-outline uppercase">Date
+                                        </th>
+                                        <th class="px-lg py-4 font-label-sm text-label-sm text-outline uppercase">
+                                            Marchand</th>
+                                        <th class="px-lg py-4 font-label-sm text-label-sm text-outline uppercase">
+                                            Montant</th>
+                                        <th class="px-lg py-4 font-label-sm text-label-sm text-outline uppercase">Statut
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5" id="personal-history-rows">
+                                    <tr class="hover:bg-white/5 transition-colors cursor-pointer group">
+                                        <td colspan="4"
+                                            class="px-lg py-8 text-center text-on-surface-variant font-label-md">
+                                            Chargement de votre historique de transactions...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Page-specific JS -->
+    <script src="js/user_dashboard.js"></script>
+</body>
+
+</html>

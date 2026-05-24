@@ -124,17 +124,42 @@
 <!-- TopNavBar -->
 <header class="bg-background/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/5">
 <nav class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-7xl mx-auto">
-<div class="text-headline-md font-headline-md font-bold tracking-tighter text-primary">SENTINEL.AI</div>
+<div class="flex items-center gap-3">
+    <div
+        class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
+        <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
+            style="font-variation-settings: 'FILL' 1;">security</span>
+    </div>
+    <div>
+        <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
+            AI</span>
+    </div>
+</div>
 <div class="hidden md:flex gap-lg items-center">
 <a class="text-primary border-b-2 border-primary pb-1 font-bold text-label-md font-label-md" href="#">Accueil</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">Dashboard</a>
 <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">Analyser</a>
 
 </div>
-<div class="flex items-center gap-md">
+<div class="flex items-center gap-md" id="auth-buttons-container">
 <a id="btn-login" class="hidden sm:block text-on-surface hover:text-primary transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="/login.html#login">Se connecter</a>
 <a id="btn-register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded hover:scale-95 transition-transform duration-150 font-label-md text-label-md font-bold flex items-center justify-center cursor-pointer" href="/login.html#register">S'inscrire</a>
 </div>
+
+<!-- Authenticated User Profile (Hidden by default) -->
+<div class="hidden items-center gap-md" id="auth-profile-container">
+    <div class="text-right hidden lg:block mr-2">
+        <p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">Chargement...</p>
+        <p id="user-display-role" class="font-label-sm text-[10px] text-outline">Utilisateur</p>
+    </div>
+    <button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full" title="Déconnexion">
+        <span class="material-symbols-outlined text-primary">logout</span>
+    </button>
+    <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
+        <img alt="User Profile Picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI">
+    </div>
+</div>
+
 </nav>
 </header>
 <main>
@@ -315,25 +340,70 @@
             observer.observe(el);
         });
 
+        // Auth state logic
+        const token = localStorage.getItem('jwtToken');
+        const role = localStorage.getItem('role');
+        const username = localStorage.getItem('username');
+
+        if (token) {
+            // Hide login/register buttons
+            const authButtons = document.getElementById('auth-buttons-container');
+            const heroLoginBtn = document.getElementById('btn-hero-login');
+            if (authButtons) authButtons.classList.add('hidden');
+            if (authButtons) authButtons.classList.remove('flex');
+            if (heroLoginBtn) heroLoginBtn.classList.add('hidden');
+
+            // Show profile container
+            const profileContainer = document.getElementById('auth-profile-container');
+            if (profileContainer) {
+                profileContainer.classList.remove('hidden');
+                profileContainer.classList.add('flex');
+                
+                // Fetch profile data
+                fetch('/api/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                .then(res => {
+                    if(res.ok) return res.json();
+                    throw new Error("Not authorized");
+                })
+                .then(profile => {
+                    document.getElementById('user-display-name').innerText = profile.fullName || (username ? username.split('@')[0] : 'Utilisateur');
+                    document.getElementById('user-display-role').innerText = role === 'ADMIN' ? 'Admin / Analyste' : 'Utilisateur';
+                })
+                .catch(() => {
+                    // If token invalid, clear and reset
+                    localStorage.clear();
+                    window.location.reload();
+                });
+            }
+
+            // Setup logout
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.clear();
+                    window.location.reload();
+                });
+            }
+        }
+
         // Dynamic routing logic based on JWT auth
         function goDashboard() {
-            const token = localStorage.getItem('jwtToken');
-            const role = localStorage.getItem('role');
             if (!token) {
                 window.location.href = '/login.html';
             } else if (role === 'ADMIN') {
-                window.location.href = '/admin_dashboard.html';
+                window.location.href = '/admin/admin_dashboard.html';
             } else {
-                window.location.href = '/user_dashboard.html';
+                window.location.href = '/user/user_dashboard.html';
             }
         }
 
         function goAnalyser() {
-            const token = localStorage.getItem('jwtToken');
             if (!token) {
                 window.location.href = '/login.html';
             } else {
-                window.location.href = '/simulation.html';
+                window.location.href = '/user/simulation.html';
             }
         }
 

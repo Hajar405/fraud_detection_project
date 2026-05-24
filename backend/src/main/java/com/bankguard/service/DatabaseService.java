@@ -15,6 +15,17 @@ public class DatabaseService {
     @Autowired
     private Driver neo4jDriver;
 
+    private boolean streamingEnabled = true;
+
+    public boolean isStreamingEnabled() {
+        return streamingEnabled;
+    }
+
+    public boolean toggleStreaming() {
+        streamingEnabled = !streamingEnabled;
+        return streamingEnabled;
+    }
+
     // Initialize Database constraints at startup to guarantee fast unique index lookups
     public void initDatabase() {
         try (Session session = neo4jDriver.session()) {
