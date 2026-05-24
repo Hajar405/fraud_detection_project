@@ -1,0 +1,32 @@
+{
+  "feature_cols": [
+    "merchant",
+    "category",
+    "gender",
+    "city",
+    "state",
+    "city_pop",
+    "job",
+    "trans_hour",
+    "trans_dayofweek",
+    "trans_month",
+    "is_weekend",
+    "is_night",
+    "is_peak_fraud_hour",
+    "age",
+    "amt_log",
+    "distance_km",
+    "combined_outlier"
+  ],
+  "threshold_final": 0.296263887480833,
+  "threshold_f1": 0.8480800689539534,
+  "scale_pos_weight": 171.75179856115108,
+  "weight_lgb": 0.5001955181116666,
+  "weight_xgb": 0.49980448188833343,
+  "best_iter_lgb": 968,
+  "best_iter_xgb": 1995,
+  "test_pr_auc": 0.8423299185880957,
+  "test_roc_auc": 0.995132819601093,
+  "test_recall": 0.8027972027972028,
+  "test_precision": 0.6787544343713047
+}

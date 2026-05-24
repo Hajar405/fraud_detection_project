@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FraudGuard AI - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#002113",
+                    "primary-fixed": "#d8e2ff",
+                    "primary-container": "#4d8eff",
+                    "outline-variant": "#424754",
+                    "secondary-fixed-dim": "#4edea3",
+                    "on-primary-container": "#00285d",
+                    "tertiary": "#ffb2b7",
+                    "surface-container-lowest": "#010f1f",
+                    "surface-bright": "#2c3a4c",
+                    "primary": "#adc6ff",
+                    "surface-variant": "#273647",
+                    "surface-dim": "#051424",
+                    "outline": "#8c909f",
+                    "on-tertiary-container": "#5b0017",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-fixed": "#001a42",
+                    "on-error": "#690005",
+                    "surface-container": "#122131",
+                    "surface-tint": "#adc6ff",
+                    "on-tertiary": "#67001b",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#233143",
+                    "inverse-primary": "#005ac2",
+                    "on-secondary-container": "#00311f",
+                    "surface-container-highest": "#273647",
+                    "on-tertiary-fixed": "#40000d",
+                    "on-primary": "#002e6a",
+                    "on-background": "#d4e4fa",
+                    "on-tertiary-fixed-variant": "#92002a",
+                    "primary-fixed-dim": "#adc6ff",
+                    "background": "#051424",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-primary-fixed-variant": "#004395",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#1c2b3c",
+                    "secondary": "#4edea3",
+                    "on-secondary": "#003824",
+                    "on-secondary-fixed-variant": "#005236",
+                    "tertiary-container": "#ff516a",
+                    "on-surface": "#d4e4fa",
+                    "secondary-fixed": "#6ffbbe",
+                    "inverse-surface": "#d4e4fa",
+                    "tertiary-fixed": "#ffdadb",
+                    "surface-container-low": "#0d1c2d",
+                    "tertiary-fixed-dim": "#ffb2b7",
+                    "surface": "#051424",
+                    "secondary-container": "#00a572"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "xs": "4px",
+                    "gutter": "20px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "base": "4px",
+                    "margin-desktop": "32px",
+                    "sm": "8px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "label-md": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["10px", {"lineHeight": "12px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(18, 33, 49, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(173, 198, 255, 0.1);
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .scanner-glow {
+            box-shadow: 0 0 15px rgba(78, 222, 163, 0.2);
+        }
+        .cyber-grid {
+            background-image: radial-gradient(rgba(173, 198, 255, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-custom {
+            animation: spin 1s linear infinite;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .scale-up {
+            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen cyber-grid">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 sticky top-0 z-50 bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm">
+<div class="flex items-center gap-xl">
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard AI</h1>
+<nav class="hidden md:flex items-center gap-lg"><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Accueil</a><a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Dashboard</a><a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1" href="#">Analyser</a></nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="text-right hidden lg:block mr-2">
+<p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">Utilisateur</p>
+</div>
+<button class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full" title="Notifications">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+<button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full" title="Déconnexion">
+<span class="material-symbols-outlined text-primary">logout</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
+<img alt="Security Analyst Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI"/>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-margin-desktop flex gap-gutter">
+<div class="flex-grow">
+<div class="max-w-2xl mx-auto flex flex-col gap-gutter">
+<section class="glass-panel rounded-xl p-lg relative overflow-hidden" id="main-card">
+<div class="flex items-center gap-2 mb-lg border-b border-white/5 pb-4" id="card-header">
+<span class="material-symbols-outlined text-secondary">add_card</span>
+<h2 class="font-headline-sm text-headline-sm">Nouvelle Transaction</h2>
+</div>
+<!-- Results Area (Hidden by default) -->
+<div class="hidden absolute inset-0 flex flex-col items-center justify-center bg-surface-container/60 backdrop-blur-md z-20" id="results-overlay">
+<!-- Success State -->
+<div class="hidden flex flex-col items-center gap-4 fade-in" id="state-success">
+<div class="w-20 h-20 rounded-full bg-secondary/20 flex items-center justify-center border-2 border-secondary scale-up">
+<span class="material-symbols-outlined text-secondary text-5xl font-bold">check</span>
+</div>
+<div class="text-center">
+<h3 class="font-headline-md text-secondary">Transaction Validée</h3>
+<p class="text-on-surface-variant font-body-md mt-2">Aucune anomalie détectée par l'IA.</p>
+</div>
+<button class="mt-4 px-6 py-2 border border-secondary/30 text-secondary rounded-lg hover:bg-secondary/10 transition-colors font-label-md" onclick="resetForm()">Nouvelle analyse</button>
+</div>
+<!-- Error State -->
+<div class="hidden flex flex-col items-center gap-4 fade-in" id="state-error">
+<div class="w-20 h-20 rounded-full bg-error/20 flex items-center justify-center border-2 border-error scale-up">
+<span class="material-symbols-outlined text-error text-5xl font-bold">gpp_maybe</span>
+</div>
+<div class="text-center">
+<h3 class="font-headline-md text-error">Alerte de Fraude Détectée</h3>
+<p class="text-on-surface-variant font-body-md mt-2">Activité suspecte identifiée sur ce compte.</p>
+</div>
+<button class="mt-4 px-6 py-2 border border-error/30 text-error rounded-lg hover:bg-error/10 transition-colors font-label-md" onclick="resetForm()">Ignorer &amp; Réessayer</button>
+</div>
+</div>
+<form class="space-y-md" id="transaction-form">
+<div class="grid grid-cols-2 gap-md">
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Nom</label>
+<input id="sim-lastname" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="Nom" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Prénom</label>
+<input id="sim-firstname" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="Prénom" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Numéro de carte</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-outline">credit_card</span>
+<input id="sim-cardnumber" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 pl-10 pr-4 focus:border-primary outline-none transition-all" placeholder="XXXX XXXX XXXX XXXX" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Merchant</label>
+<input id="sim-merchant" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="Nom du marchand" required="" type="text"/>
+</div>
+<div class="space-y-sm">
+<p class="font-label-md text-label-md text-outline">Adresse</p>
+<div class="grid grid-cols-2 gap-md">
+<input id="sim-state" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="État/Région (ex: FR)" type="text"/>
+<input id="sim-city" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="Ville" type="text"/>
+</div>
+<input id="sim-street" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 focus:border-primary outline-none transition-all" placeholder="Rue" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Catégorie / Raison</label>
+<select id="sim-category" class="w-full bg-background border border-outline-variant/30 rounded-lg font-body-md text-body-md py-3 px-4 text-on-surface focus:border-primary outline-none transition-all">
+<option value="entertainment">Divertissement</option>
+<option value="food_dining">Restauration</option>
+<option value="gas_transport">Transport & Essence</option>
+<option value="grocery_net">Épicerie</option>
+<option value="shopping_net">Shopping en ligne</option>
+<option value="personal_care">Soin Personnel</option>
+<option value="health_fitness">Santé & Fitness</option>
+<option value="travel">Voyage</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-outline mb-1">Montant (€)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-outline">euro</span>
+<input id="sim-amount" class="w-full bg-background border border-outline-variant/30 rounded-lg font-label-md text-label-md py-3 pl-10 pr-4 focus:border-primary outline-none transition-all" placeholder="0.00" required="" type="number" step="0.01"/>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all mt-4 scanner-glow" id="submit-btn" type="submit">
+<span class="material-symbols-outlined" id="btn-icon">security</span>
+<span id="btn-text">Analyser &amp; Transférer</span>
+<div class="hidden" id="btn-loader">
+<svg class="animate-spin-custom h-5 w-5 text-on-primary" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+</div>
+</button>
+</form>
+</section>
+</div>
+</div>
+</main>
+<script>
+    // Security check
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+        window.location.href = '/login.html';
+    }
+
+    // Set up logout button
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.clear();
+        window.location.href = '/login.html';
+    });
+
+    const displayUsername = localStorage.getItem('username');
+    if (displayUsername) {
+        document.getElementById('user-display-name').innerText = displayUsername.split('@')[0];
+    }
+
+    // Populate fields from local storage user profile if available
+    const savedCardNumber = localStorage.getItem('ccNum');
+    if (savedCardNumber) {
+        document.getElementById('sim-cardnumber').value = savedCardNumber;
+    }
+    const username = localStorage.getItem('username');
+    if (username) {
+        const parts = username.split('@')[0].split('.');
+        if (parts.length > 0) document.getElementById('sim-firstname').value = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+        if (parts.length > 1) document.getElementById('sim-lastname').value = parts[1].charAt(0).toUpperCase() + parts[1].slice(1);
+    }
+
+    // Dynamic Navigation links
+    document.querySelectorAll('nav a').forEach(a => {
+        if (a.innerText === 'Dashboard') {
+            a.href = '#';
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                const role = localStorage.getItem('role');
+                if (role === 'ADMIN') {
+                    window.location.href = '/admin_dashboard.html';
+                } else {
+                    window.location.href = '/user_dashboard.html';
+                }
+            });
+        } else if (a.innerText === 'Accueil') {
+            a.href = '/index.html';
+        } else if (a.innerText === 'Analyser') {
+            a.href = '/simulation.html';
+        }
+    });
+
+    const form = document.getElementById('transaction-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnIcon = document.getElementById('btn-icon');
+    const btnLoader = document.getElementById('btn-loader');
+    
+    const resultsOverlay = document.getElementById('results-overlay');
+    const stateSuccess = document.getElementById('state-success');
+    const stateError = document.getElementById('state-error');
+    const mainCard = document.getElementById('main-card');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Step 1: Loading state
+        submitBtn.disabled = true;
+        btnText.innerText = "Analyse en cours...";
+        btnIcon.classList.add('hidden');
+        btnLoader.classList.remove('hidden');
+        submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+
+        const lastname = document.getElementById('sim-lastname').value;
+        const firstname = document.getElementById('sim-firstname').value;
+        const ccNum = document.getElementById('sim-cardnumber').value;
+        const merchant = document.getElementById('sim-merchant').value;
+        const state = document.getElementById('sim-state').value || "FR";
+        const city = document.getElementById('sim-city').value || "Paris";
+        const street = document.getElementById('sim-street').value || "Champs-Elysees";
+        const category = document.getElementById('sim-category').value;
+        const amt = document.getElementById('sim-amount').value;
+
+        const parsedAmt = parseFloat(amt);
+        const isSuspicious = merchant.toLowerCase().includes('fraud') || parsedAmt > 150.0;
+        const merchLat = isSuspicious ? 40.7128 : 48.8600;
+        const merchLong = isSuspicious ? -74.0060 : 2.3600;
+
+        const payload = {
+            cc_num: ccNum,
+            amt: parsedAmt,
+            merchant: merchant,
+            category: category,
+            gender: "M",
+            city: city,
+            state: state,
+            city_pop: 2200000,
+            job: "Professionnel",
+            dob: "1985-05-15",
+            lat: 48.8566,
+            long: 2.3522,
+            merch_lat: merchLat,
+            merch_long: merchLong
+        };
+
+        try {
+            const response = await fetch('/api/transactions/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await response.json();
+            
+            // Hide button and show result
+            submitBtn.classList.add('hidden');
+            resultsOverlay.classList.remove('hidden');
+
+            if (response.ok && data.isFraud === false) {
+                // Success
+                stateSuccess.classList.remove('hidden');
+                document.querySelector('#state-success p').innerText = `Aucune anomalie détectée par l'IA. Score de risque : ${data.riskScore}%`;
+                mainCard.style.borderColor = 'rgba(78, 222, 163, 0.5)';
+                mainCard.style.boxShadow = '0 0 20px rgba(78, 222, 163, 0.2)';
+            } else {
+                // Suspicious or Error
+                stateError.classList.remove('hidden');
+                const reason = data.graphSignals?.graphRiskAdjustment > 0 ? "Alerte de vitesse/historique suspect détecté par le graphe Neo4j." : "Transaction classifiée comme hautement suspecte par l'IA XGBoost.";
+                document.querySelector('#state-error p').innerText = `${reason} Score de risque : ${data.riskScore || 99}%`;
+                mainCard.style.borderColor = 'rgba(255, 180, 171, 0.5)';
+                mainCard.style.boxShadow = '0 0 20px rgba(255, 180, 171, 0.2)';
+            }
+        } catch (err) {
+            submitBtn.classList.add('hidden');
+            resultsOverlay.classList.remove('hidden');
+            stateError.classList.remove('hidden');
+            document.querySelector('#state-error h3').innerText = "Erreur de connexion";
+            document.querySelector('#state-error p').innerText = "Impossible d'analyser la transaction.";
+            mainCard.style.borderColor = 'rgba(255, 180, 171, 0.5)';
+            mainCard.style.boxShadow = '0 0 20px rgba(255, 180, 171, 0.2)';
+        }
+    });
+
+    function resetForm() {
+        // Reset UI to initial state
+        resultsOverlay.classList.add('hidden');
+        stateSuccess.classList.add('hidden');
+        stateError.classList.add('hidden');
+        
+        submitBtn.classList.remove('hidden');
+        submitBtn.disabled = false;
+        btnText.innerText = "Analyser & Transférer";
+        btnIcon.classList.remove('hidden');
+        btnLoader.classList.add('hidden');
+        submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+        
+        mainCard.style.borderColor = 'rgba(173, 198, 255, 0.1)';
+        mainCard.style.boxShadow = 'none';
+        
+        form.reset();
+        if (savedCardNumber) {
+            document.getElementById('sim-cardnumber').value = savedCardNumber;
+        }
+    }
+</script>
+</body></html>
+</body></html>
+

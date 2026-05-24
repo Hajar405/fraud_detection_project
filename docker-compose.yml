@@ -1,0 +1,84 @@
+services:
+  # 1. Neo4j Graph Database
+  neo4j:
+    image: neo4j:5-community
+    container_name: bankguard-neo4j
+    ports:
+      - "7474:7474" # Neo4j Browser HTML interface
+      - "7687:7687" # Bolt connection port
+    environment:
+      - NEO4J_AUTH=neo4j/password
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    networks:
+      - bankguard-network
+
+  # 2. Machine Learning Sidecar Service
+  ml-sidecar:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.ml
+    container_name: bankguard-ml-sidecar
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./models_a _utiliser:/models_a _utiliser
+    networks:
+      - bankguard-network
+
+  # 3. Spring Boot Core Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bankguard-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=password
+      - ML_SIDECAR_URL=http://ml-sidecar:5000/predict
+    depends_on:
+      - neo4j
+      - ml-sidecar
+    networks:
+      - bankguard-network
+
+  # 4. Premium Nginx Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bankguard-frontend
+    ports:
+      - "8082:80"
+
+    depends_on:
+      - backend
+    networks:
+      - bankguard-network
+
+  # 5. Real-Time Sparkov Streaming Simulator
+  streaming:
+    build:
+      context: ./streaming
+      dockerfile: Dockerfile
+    container_name: bankguard-streaming
+    environment:
+      - BACKEND_URL=http://backend:8080/api/transactions/analyze
+    volumes:
+      - ./models_a _utiliser:/models_a _utiliser
+    depends_on:
+      - backend
+    networks:
+      - bankguard-network
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+
+networks:
+  bankguard-network:
+    driver: bridge

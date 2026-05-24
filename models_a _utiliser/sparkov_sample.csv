@@ -1,0 +1,16 @@
+cc_num,amt,merchant,category,gender,city,state,city_pop,job,dob,lat,long,merch_lat,merch_long,trans_date
+4532111122223333,4.97,fraud_Rippin, Kub and Mann,misc_net,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,40.7200,-74.0100,2026-05-23 15:00:00
+4532111122223333,107.23,fraud_Heller, Gutmann and Zieme,grocery_pos,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,40.7220,-74.0080,2026-05-23 15:00:05
+4532111122223333,350.00,fraud_Kovacek-Durgan,shopping_net,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,41.9500,-72.1100,2026-05-23 15:00:10
+630423337322,220.11,fraud_Lind-Buckridge,entertainment,M,Dallas,TX,1500000,Manager,1978-06-21,32.7767,-96.7970,32.7800,-96.8000,2026-05-23 15:00:15
+630423337322,12.50,fraud_Rau-Goldner,kids_pets,M,Dallas,TX,1500000,Manager,1978-06-21,32.7767,-96.7970,32.7700,-96.7900,2026-05-23 15:00:20
+630423337322,480.00,fraud_Kuhn-Parker,travel,M,Dallas,TX,1500000,Manager,1978-06-21,32.7767,-96.7970,36.5000,-115.1000,2026-05-23 15:00:25
+38859492057661,15.99,fraud_Schultz, Gas and Cafe,gas_transport,F,Paris,TX,25000,Teacher,1962-01-19,33.6609,-95.5555,33.6650,-95.5600,2026-05-23 15:00:30
+38859492057661,5.50,fraud_Boyer-West,home,F,Paris,TX,25000,Teacher,1962-01-19,33.6609,-95.5555,33.6600,-95.5500,2026-05-23 15:00:35
+38859492057661,850.00,fraud_Murazik-Emmerich,shopping_net,F,Paris,TX,25000,Teacher,1962-01-19,33.6609,-95.5555,42.1000,-88.5000,2026-05-23 15:00:40
+4532111122223333,24.50,fraud_Douglas, Gas and Cafe,gas_transport,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,40.7100,-74.0000,2026-05-23 15:00:45
+4532111122223333,95.00,fraud_Rippin, Kub and Mann,misc_net,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,40.7200,-74.0100,2026-05-23 15:00:50
+630423337322,4.20,fraud_Douglas, Gas and Cafe,gas_transport,M,Dallas,TX,1500000,Manager,1978-06-21,32.7767,-96.7970,32.7700,-96.7900,2026-05-23 15:00:55
+630423337322,9.99,fraud_Schultz, Gas and Cafe,gas_transport,M,Dallas,TX,1500000,Manager,1978-06-21,32.7767,-96.7970,32.7800,-96.8000,2026-05-23 15:01:00
+38859492057661,250.00,fraud_Kovacek-Durgan,shopping_net,F,Paris,TX,25000,Teacher,1962-01-19,33.6609,-95.5555,41.9500,-72.1100,2026-05-23 15:01:05
+4532111122223333,650.00,fraud_Kuhn-Parker,travel,F,Adams,NY,3495,Psychologist, counselling,1988-03-09,40.7128,-74.0060,36.5000,-115.1000,2026-05-23 15:01:10

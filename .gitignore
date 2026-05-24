@@ -1,0 +1,26 @@
+# Node
+node_modules/
+
+# Java
+target/
+*.class
+*.jar
+
+# Python
+__pycache__/
+*.pyc
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env

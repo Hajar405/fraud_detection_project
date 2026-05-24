@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FraudGuard AI - Connexion &amp; Inscription</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#273647",
+                        "tertiary-container": "#ff516a",
+                        "on-surface": "#d4e4fa",
+                        "error-container": "#93000a",
+                        "outline": "#8c909f",
+                        "on-tertiary-container": "#5b0017",
+                        "surface-bright": "#2c3a4c",
+                        "surface": "#051424",
+                        "on-primary-container": "#00285d",
+                        "on-secondary-container": "#00311f",
+                        "surface-container-high": "#1c2b3c",
+                        "inverse-surface": "#d4e4fa",
+                        "outline-variant": "#424754",
+                        "on-primary-fixed": "#001a42",
+                        "on-tertiary": "#67001b",
+                        "on-secondary": "#003824",
+                        "background": "#051424",
+                        "error": "#ffb4ab",
+                        "on-background": "#d4e4fa",
+                        "tertiary": "#ffb2b7",
+                        "secondary-fixed-dim": "#4edea3",
+                        "surface-container-low": "#0d1c2d",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary-fixed-variant": "#005236",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-on-surface": "#233143",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "surface-variant": "#273647",
+                        "tertiary-fixed": "#ffdadb",
+                        "secondary": "#4edea3",
+                        "on-primary-fixed-variant": "#004395",
+                        "secondary-container": "#00a572",
+                        "primary": "#adc6ff",
+                        "surface-dim": "#051424",
+                        "on-tertiary-fixed": "#40000d",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-container": "#4d8eff",
+                        "surface-container-lowest": "#010f1f",
+                        "on-error": "#690005",
+                        "inverse-primary": "#005ac2",
+                        "on-primary": "#002e6a",
+                        "surface-tint": "#adc6ff",
+                        "surface-container": "#122131",
+                        "tertiary-fixed-dim": "#ffb2b7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "md": "16px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["JetBrains Mono"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["10px", {"lineHeight": "12px", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(18, 33, 49, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .form-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hidden-tab {
+            display: none !important;
+        }
+        input:focus {
+            ring-color: #4edea3 !important;
+            border-color: #4edea3 !important;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg text-body-lg min-h-screen">
+<main class="flex min-h-screen overflow-hidden">
+<!-- Left Column: Professional Branding & Illustration -->
+<section class="hidden lg:flex lg:w-1/2 bg-surface-container-lowest relative flex-col justify-between p-xl overflow-hidden border-r border-outline-variant/20">
+<!-- Decorative Elements -->
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+<div class="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-secondary blur-3xl"></div>
+<div class="absolute bottom-48 right-0 w-64 h-64 rounded-full bg-primary blur-3xl"></div>
+</div>
+<!-- Header Identity -->
+<div class="z-10 flex items-center gap-3">
+<div class="w-12 h-12 bg-secondary flex items-center justify-center rounded-lg shadow-xl shadow-secondary/10">
+<span class="material-symbols-outlined text-surface-container-lowest text-3xl" style="font-variation-settings: 'FILL' 1;">security</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tighter leading-none">FraudGuard AI</h1>
+<p class="text-secondary font-label-md text-label-md mt-1 uppercase">SÉCURITÉ BANCAIRE DE NOUVELLE GÉNÉRATION</p>
+</div>
+</div>
+<!-- Central Illustration -->
+<div class="z-10 flex-grow flex items-center justify-center py-xl">
+<div class="relative w-full max-w-lg aspect-square">
+<img class="w-full h-full object-cover rounded-xl shadow-2xl border border-secondary/20" data-alt="A sophisticated professional banking illustration depicting abstract data visualizations and digital security nodes. The visual style is sleek and institutional, featuring a deep navy blue background with vibrant turquoise and emerald green accents. Soft ambient lighting illuminates a central digital vault icon, representing high-level financial protection and technological sophistication in a modern corporate setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDezYi6KV7wMxXleAB6ShTjwctT245hYsAxgeYvWUc9TtlY3gzl-M-Y-ZBBouc2pv_na-IqkaaHuiSlo3zps91ib6EF2LBvqoRk6JUAUrbhmQ560Wi6QM0xz_kM6ALx8EbD3tL6OURd-rGmIj9SvIiq7zwPFFWyle99O7utRFGMZa76bOEWLRmG3sPZKeLgKTnFjSi4010sLdl5KIEsQTwKiZEPQR-SyTciqBvNvXal-Xa8PCvsE3k7_6JujE5UuLLd4oWcTBuc7lp7"/>
+<!-- Floating Stat Cards (Visual Polish) -->
+<div class="absolute -bottom-8 -right-8 glass-panel border border-secondary/30 p-md rounded-xl shadow-2xl max-w-xs">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary bg-surface-container-highest p-sm rounded-lg" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<div>
+<p class="text-on-surface-variant font-label-sm text-label-sm uppercase">VÉRIFICATION</p>
+<p class="text-secondary font-bold font-headline-sm">99.9% Précision AI</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Message -->
+<div class="z-10">
+<p class="text-on-surface font-body-lg max-w-md leading-relaxed">
+                "Une plateforme conçue pour la transparence, la rapidité et une sécurité absolue de vos actifs financiers."
+            </p>
+<div class="flex gap-4 mt-lg text-on-surface-variant/40 text-sm font-label-md">
+<span>© 2024 FraudGuard Global</span>
+<span>•</span>
+<span>Conformité RGPD</span>
+</div>
+</div>
+</section>
+<!-- Right Column: Forms -->
+<section class="w-full lg:w-1/2 flex flex-col justify-center items-center p-md lg:p-xl bg-surface">
+<div class="w-full max-w-md bg-surface-container p-lg lg:p-xl rounded-xl shadow-2xl border border-outline-variant/10">
+<!-- Tab Toggles -->
+<div class="flex gap-1 bg-surface-container-low p-xs rounded-lg mb-xl">
+<button class="flex-1 py-sm px-md rounded-md font-bold text-sm transition-all bg-secondary text-surface-container-lowest shadow-sm" id="login-tab-btn" onclick="switchForm('login')">Connexion</button>
+<button class="flex-1 py-sm px-md rounded-md font-bold text-sm transition-all text-on-surface-variant hover:bg-surface-container-high" id="register-tab-btn" onclick="switchForm('register')">Inscription</button>
+</div>
+<!-- Login Form -->
+<div class="form-transition" id="login-section">
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Bon retour parmi nous</h2>
+<p class="text-on-surface-variant mt-sm">Veuillez entrer vos identifiants pour accéder à votre espace sécurisé.</p>
+</div>
+<form class="space-y-md" id="login-form">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">ADRESSE E-MAIL</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">mail</span>
+<input id="login-email" name="username" class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all placeholder:text-outline/50" placeholder="nom@banque.fr" type="email" required/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">MOT DE PASSE</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">lock</span>
+<input id="login-password" name="password" class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all placeholder:text-outline/50" placeholder="••••••••" type="password" required/>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="w-4 h-4 rounded text-secondary focus:ring-secondary border-outline-variant bg-surface-container-high" type="checkbox"/>
+<span class="text-body-md text-on-surface-variant">Se souvenir de moi</span>
+</label>
+<a class="text-body-md font-semibold text-secondary hover:underline" href="#">Mot de passe oublié ?</a>
+</div>
+<button type="submit" class="w-full bg-secondary text-surface-container-lowest py-lg rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary-fixed active:scale-[0.98] transition-all shadow-lg shadow-secondary/10">
+<span>Se connecter</span>
+<span class="material-symbols-outlined text-md">arrow_forward</span>
+</button>
+</form>
+</div>
+<!-- Register Form -->
+<div class="form-transition hidden-tab" id="register-section">
+<div class="mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Créer un compte</h2>
+<p class="text-on-surface-variant mt-sm" id="register-subtitle">Rejoignez l'élite bancaire et sécurisez votre avenir dès aujourd'hui.</p>
+</div>
+<form class="space-y-md" id="register-form">
+<!-- Role Selection -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">TYPE DE COMPTE</label>
+<div class="grid grid-cols-2 gap-sm">
+<label class="relative flex items-center justify-center p-sm border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-high transition-all">
+<input checked="" class="sr-only peer" name="role" type="radio" value="USER"/>
+<span class="peer-checked:text-secondary peer-checked:font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-md">person</span> UTILISATEUR
+                                </span>
+<div class="absolute inset-0 border-2 border-transparent peer-checked:border-secondary rounded-lg pointer-events-none"></div>
+</label>
+<label class="relative flex items-center justify-center p-sm border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-high transition-all">
+<input class="sr-only peer" name="role" type="radio" value="ADMIN"/>
+<span class="peer-checked:text-secondary peer-checked:font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-md">shield_person</span> ADMIN
+                                </span>
+<div class="absolute inset-0 border-2 border-transparent peer-checked:border-secondary rounded-lg pointer-events-none"></div>
+</label>
+</div>
+</div>
+<!-- 2 Column Grid for Fields -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">NOM COMPLET</label>
+<input id="register-fullname" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="Jean Dupont" type="text" required/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">ÂGE</label>
+<input id="register-age" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="25" type="number" required/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">E-MAIL PROFESSIONNEL</label>
+<input id="register-email" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="jean.dupont@finance.fr" type="email" required/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">NUMÉRO DE TÉLÉPHONE</label>
+<input id="register-phone" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="+33 6 12 34 56 78" type="tel" required/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">ADRESSE POSTALE</label>
+<input id="register-address" class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="123 Avenue des Champs-Élysées, Paris" type="text" required/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-secondary uppercase">NUMÉRO DE CARTE (VÉRIFICATION)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">credit_card</span>
+<input id="register-cardnumber" class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all" placeholder="4532 •••• •••• ••••" type="text" required/>
+</div>
+</div>
+<div class="pt-sm">
+<p class="text-xs text-on-surface-variant mb-md leading-relaxed">
+                            En cliquant sur "Créer un compte", vous acceptez nos <a class="text-secondary font-bold" href="#">Conditions d'Utilisation</a> et notre <a class="text-secondary font-bold" href="#">Politique de Confidentialité</a>.
+                        </p>
+<button type="submit" class="w-full bg-secondary text-surface-container-lowest py-lg rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary-fixed active:scale-[0.98] transition-all shadow-lg shadow-secondary/10">
+<span>Créer un compte</span>
+<span class="material-symbols-outlined text-md">person_add</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Alternative Methods -->
+<div class="mt-xl pt-lg border-t border-outline-variant/10 text-center">
+<p class="text-body-md text-on-surface-variant mb-md font-label-md">OU CONTINUER AVEC</p>
+<div class="flex justify-center gap-lg">
+<button class="w-12 h-12 flex items-center justify-center border border-outline-variant/30 rounded-full hover:bg-surface-container-high transition-colors shadow-sm bg-surface-container-low">
+<img alt="Google Logo" class="w-6 h-6 grayscale hover:grayscale-0 transition-all opacity-70 hover:opacity-100" data-alt="The iconic multi-colored letter G representing Google, centered in a minimal white space. The image is clean and professional with soft drop shadows and high-definition details for a web UI button." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAk8CFpCCPYlX1wlDjZbgbvoNkOTvpA8LD6a30Pv1hHU0U1Ge5xUAWMmMnxxsDZQn6vD_ZW4fcweyiDXV1WM1AximbhrRH3c-1Dc3D7Wdp5SDulkpFYcWCq7KUhQx1A-TE9NHLyV6dOqv1j15G5tpeqzBs2CVyjI9GNUky5lOvMzKPgAmjpeSzJX6I90xLCAqI9TeOs-KtFSQhXxXsW8XatRkbWSgPfb78_rtVYDmGTVORbBLJz1v8sqtxwAeRiWgJXf6MPmRiYd_Bk"/>
+</button>
+<button class="w-12 h-12 flex items-center justify-center border border-outline-variant/30 rounded-full hover:bg-surface-container-high transition-colors shadow-sm bg-surface-container-low">
+<span class="material-symbols-outlined text-2xl text-secondary">fingerprint</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Small -->
+<footer class="mt-lg text-on-surface-variant/40 text-xs font-label-md tracking-widest uppercase">
+            Besoin d'aide? Contactez notre support 24/7 au 0800-SECURITY
+        </footer>
+</section>
+</main>
+<script>
+    function switchForm(mode) {
+        const loginSection = document.getElementById('login-section');
+        const registerSection = document.getElementById('register-section');
+        const loginBtn = document.getElementById('login-tab-btn');
+        const registerBtn = document.getElementById('register-tab-btn');
+
+        if (mode === 'login') {
+            loginSection.classList.remove('hidden-tab');
+            registerSection.classList.add('hidden-tab');
+            
+            loginBtn.classList.add('bg-secondary', 'text-surface-container-lowest', 'shadow-sm');
+            loginBtn.classList.remove('text-on-surface-variant');
+            
+            registerBtn.classList.remove('bg-secondary', 'text-surface-container-lowest', 'shadow-sm');
+            registerBtn.classList.add('text-on-surface-variant');
+        } else {
+            loginSection.classList.add('hidden-tab');
+            registerSection.classList.remove('hidden-tab');
+            
+            registerBtn.classList.add('bg-secondary', 'text-surface-container-lowest', 'shadow-sm');
+            registerBtn.classList.remove('text-on-surface-variant');
+            
+            loginBtn.classList.remove('bg-secondary', 'text-surface-container-lowest', 'shadow-sm');
+            loginBtn.classList.add('text-on-surface-variant');
+        }
+    }
+
+    // Add a micro-interaction for input fields
+    const inputs = document.querySelectorAll('input:not([type="radio"]):not([type="checkbox"])');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.closest('div').classList.add('scale-[1.01]');
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.closest('div').classList.remove('scale-[1.01]');
+        });
+    });
+
+    // Handle Login API flow
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const subtitle = document.querySelector('#login-section p');
+
+        subtitle.className = "text-on-surface-variant mt-sm";
+        subtitle.innerText = "Veuillez entrer vos identifiants pour accéder à votre espace sécurisé.";
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: email, password: password })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                // Store JWT credentials
+                localStorage.setItem('jwtToken', data.token);
+                localStorage.setItem('username', data.username);
+                localStorage.setItem('role', data.role);
+                localStorage.setItem('ccNum', data.ccNum || '');
+
+                subtitle.className = "text-secondary font-bold mt-sm";
+                subtitle.innerText = "Connexion réussie ! Redirection en cours...";
+
+                setTimeout(() => {
+                    if (data.role === 'ADMIN') {
+                        window.location.href = '/admin_dashboard.html';
+                    } else {
+                        window.location.href = '/user_dashboard.html';
+                    }
+                }, 1000);
+            } else {
+                subtitle.className = "text-error font-bold mt-sm";
+                subtitle.innerText = "Erreur : " + (data.error || "Identifiants invalides.");
+            }
+        } catch (err) {
+            subtitle.className = "text-error font-bold mt-sm";
+            subtitle.innerText = "Erreur de connexion au serveur.";
+        }
+    });
+
+    // Handle Registration API flow
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const role = document.querySelector('input[name="role"]:checked').value;
+        const fullName = document.getElementById('register-fullname').value;
+        const age = document.getElementById('register-age').value;
+        const email = document.getElementById('register-email').value;
+        const phone = document.getElementById('register-phone').value;
+        const address = document.getElementById('register-address').value;
+        const cardNumber = document.getElementById('register-cardnumber').value;
+        const registerSubtitle = document.getElementById('register-subtitle');
+
+        registerSubtitle.className = "text-on-surface-variant mt-sm";
+        registerSubtitle.innerText = "Rejoignez l'élite bancaire et sécurisez votre avenir dès aujourd'hui.";
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: email,
+                    password: 'Password123!',
+                    fullName: fullName,
+                    age: parseInt(age),
+                    email: email,
+                    phone: phone,
+                    address: address,
+                    cardNumber: cardNumber,
+                    role: role
+                })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                registerSubtitle.className = "text-secondary font-bold mt-sm";
+                registerSubtitle.innerText = "Inscription réussie ! redirection vers la page de connexion...";
+
+                setTimeout(() => {
+                    switchForm('login');
+                    document.getElementById('login-email').value = email;
+                    document.getElementById('login-password').value = 'Password123!';
+                    registerSubtitle.className = "text-on-surface-variant mt-sm";
+                    registerSubtitle.innerText = "Rejoignez l'élite bancaire et sécurisez votre avenir dès aujourd'hui.";
+                }, 1500);
+            } else {
+                registerSubtitle.className = "text-error font-bold mt-sm";
+                registerSubtitle.innerText = "Erreur : " + (data.error || "Échec de l'inscription.");
+            }
+        } catch (err) {
+            registerSubtitle.className = "text-error font-bold mt-sm";
+            registerSubtitle.innerText = "Erreur de connexion au serveur.";
+        }
+    });
+</script>
+</body></html>
+
