@@ -132,8 +132,8 @@
 
 </div>
 <div class="flex items-center gap-md">
-<button class="hidden sm:block text-on-surface hover:text-primary transition-colors duration-200 font-label-md text-label-md">Se connecter</button>
-<button class="bg-primary-container text-on-primary-container px-lg py-sm rounded hover:scale-95 transition-transform duration-150 font-label-md text-label-md font-bold">S'inscrire</button>
+<a id="btn-login" class="hidden sm:block text-on-surface hover:text-primary transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="/login.html#login">Se connecter</a>
+<a id="btn-register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded hover:scale-95 transition-transform duration-150 font-label-md text-label-md font-bold flex items-center justify-center cursor-pointer" href="/login.html#register">S'inscrire</a>
 </div>
 </nav>
 </header>
@@ -156,8 +156,7 @@
                     FraudGuard AI utilise des modèles ML XGBoost de pointe et des analyses de graphes Neo4j pour neutraliser les menaces complexes en temps réel.
                 </p>
 <div class="flex flex-col sm:flex-row gap-md justify-center">
-<button class="px-xl py-md bg-primary text-on-primary font-bold rounded-lg shadow-[0_0_15px_rgba(173,198,255,0.4)] hover:shadow-[0_0_25px_rgba(173,198,255,0.6)] transition-all">Connecxion</button>
-
+<a id="btn-hero-login" class="px-xl py-md bg-primary text-on-primary font-bold rounded-lg shadow-[0_0_15px_rgba(173,198,255,0.4)] hover:shadow-[0_0_25px_rgba(173,198,255,0.6)] transition-all flex items-center justify-center cursor-pointer" href="/login.html#login">Connexion</a>
 </div>
 <!-- Dashboard Preview -->
 <div class="mt-xl mx-auto max-w-5xl glass rounded-xl p-base border border-white/10 shadow-2xl relative transition-all duration-700 opacity-100 translate-y-0">
@@ -352,17 +351,10 @@
         });
 
         // Auth Buttons
-        document.querySelectorAll('header button, header a, section button').forEach(btn => {
-            if (btn.innerText.includes("connecter") || btn.innerText.includes("S'inscrire") || btn.innerText.includes("Connecxion")) {
-                btn.addEventListener('click', () => {
-                    const token = localStorage.getItem('jwtToken');
-                    if (token) {
-                        goDashboard();
-                    } else {
-                        window.location.href = '/login.html';
-                    }
-                });
-            }
+        document.querySelectorAll('#btn-login, #btn-register, #btn-hero-login').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Let native href navigation handle it
+            });
         });
     </script>
 

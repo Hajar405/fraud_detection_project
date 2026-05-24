@@ -54,7 +54,8 @@ services:
     container_name: bankguard-frontend
     ports:
       - "8082:80"
-
+    volumes:
+      - ./frontend:/usr/share/nginx/html
     depends_on:
       - backend
     networks:
