@@ -163,6 +163,39 @@ public class TransactionController {
         }
     }
 
+    private static List<String> parseCsvLine(String line) {
+        List<String> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean inQuotes = false;
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                result.add(sb.toString().trim());
+                sb.setLength(0);
+            } else {
+                sb.append(c);
+            }
+        }
+        result.add(sb.toString().trim());
+        return result;
+    }
+
+    private static String getColValue(List<String> parts, Map<String, Integer> colIndex, String[] keys, String defaultValue) {
+        for (String key : keys) {
+            Integer idx = colIndex.get(key.toLowerCase());
+            if (idx != null && idx >= 0 && idx < parts.size()) {
+                String val = parts.get(idx).trim();
+                if (val.startsWith("\"") && val.endsWith("\"") && val.length() >= 2) {
+                    val = val.substring(1, val.length() - 1).trim();
+                }
+                return val;
+            }
+        }
+        return defaultValue;
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<?> uploadBatchCSV(@RequestParam("file") MultipartFile file) {
         try {
@@ -182,89 +215,62 @@ public class TransactionController {
                 }
 
                 // Parse header to find column indices
-                String[] headerCols = headerLine.split(",");
+                List<String> headerCols = parseCsvLine(headerLine);
                 Map<String, Integer> colIndex = new HashMap<>();
-                for (int i = 0; i < headerCols.length; i++) {
-                    colIndex.put(headerCols[i].trim().toLowerCase(), i);
+                for (int i = 0; i < headerCols.size(); i++) {
+                    colIndex.put(headerCols.get(i).trim().toLowerCase(), i);
                 }
 
                 String line;
                 while ((line = br.readLine()) != null) {
                     if (line.trim().isEmpty()) continue;
 
-                    // Robust CSV parsing: parse from right side since last fields (numeric/date) don't contain commas
-                    // Expected header: cc_num,amt,merchant,category,gender,city,state,city_pop,job,dob,lat,long,merch_lat,merch_long,trans_date
-                    // Fields with possible embedded commas: merchant (idx 2), job (idx 8)
-                    String[] allParts = line.split(",");
-                    if (allParts.length < 15) continue; // need at least 15 tokens
+                    List<String> parts = parseCsvLine(line);
+                    if (parts.size() < 3) continue;
 
-                    // Parse from the RIGHT: trans_date is last, then merch_long, merch_lat, long, lat, dob
-                    int n = allParts.length;
-                    String transDate = allParts[n - 1].trim();
-                    // Handle trans_date that might have been split on space (e.g., "2026-05-23 15:00:00" is one field)
-                    // If the last part looks like a time (HH:mm:ss), combine with previous
-                    if (transDate.matches("\\d{2}:\\d{2}:\\d{2}")) {
-                        transDate = allParts[n - 2].trim() + " " + transDate;
-                        n = n - 1; // adjust end pointer
-                    }
-                    double merchLon = Double.parseDouble(allParts[n - 2].trim());
-                    double merchLat = Double.parseDouble(allParts[n - 3].trim());
-                    double lon = Double.parseDouble(allParts[n - 4].trim());
-                    double lat = Double.parseDouble(allParts[n - 5].trim());
-                    String dob = allParts[n - 6].trim();
-                    // Job may have commas, so we need to figure out the boundary
-                    // From the LEFT: cc_num=0, amt=1, then merchant+category+gender+city+state+city_pop occupy indices 2..?
-                    // From the RIGHT: dob is at n-6, before that is job (which may span multiple parts)
-                    
-                    // Parse from LEFT: cc_num and amt are straightforward
-                    String ccNum = allParts[0].trim();
-                    double amt = Double.parseDouble(allParts[1].trim());
+                    // Extract columns dynamically using our flexible helper
+                    String ccNum = getColValue(parts, colIndex, new String[]{"cc_num", "ccnum", "card_number"}, "unknown_card");
+                    double amt = 0.0;
+                    try {
+                        amt = Double.parseDouble(getColValue(parts, colIndex, new String[]{"amt", "amount"}, "0.0"));
+                    } catch (NumberFormatException e) {}
 
-                    // city_pop is the rightmost purely numeric field before job
-                    // Strategy: scan from right (before dob) backwards to find city_pop (a pure integer)
-                    // city_pop is between state and job
-                    // Working backwards from dob (at n-6), job parts are before that until we hit city_pop (pure integer)
-                    int dobIdx = n - 6;
-                    
-                    // Find city_pop: scan leftward from dobIdx-1, city_pop is a large integer
-                    int cityPopIdx = -1;
-                    for (int i = dobIdx - 1; i >= 2; i--) {
-                        String part = allParts[i].trim();
-                        if (part.matches("\\d+") && Integer.parseInt(part) >= 0) {
-                            cityPopIdx = i;
-                            break;
-                        }
-                    }
-                    
-                    if (cityPopIdx < 0) continue; // skip malformed line
+                    String merchant = getColValue(parts, colIndex, new String[]{"merchant", "merch"}, "unknown_merchant");
+                    String category = getColValue(parts, colIndex, new String[]{"category", "cat"}, "unknown_category");
+                    String gender = getColValue(parts, colIndex, new String[]{"gender", "sex"}, "M");
+                    String city = getColValue(parts, colIndex, new String[]{"city"}, "unknown_city");
+                    String state = getColValue(parts, colIndex, new String[]{"state"}, "unknown_state");
 
-                    int cityPop = Integer.parseInt(allParts[cityPopIdx].trim());
-                    // job = everything between cityPopIdx+1 and dobIdx-1 (inclusive), joined with commas
-                    StringBuilder jobBuilder = new StringBuilder();
-                    for (int i = cityPopIdx + 1; i <= dobIdx - 1; i++) {
-                        if (jobBuilder.length() > 0) jobBuilder.append(", ");
-                        jobBuilder.append(allParts[i].trim());
-                    }
-                    String job = jobBuilder.length() > 0 ? jobBuilder.toString() : "unknown_job";
-                    
-                    // state is at cityPopIdx-1, city at cityPopIdx-2, gender at cityPopIdx-3
-                    String state = cityPopIdx >= 3 ? allParts[cityPopIdx - 1].trim() : "unknown_state";
-                    String city = cityPopIdx >= 4 ? allParts[cityPopIdx - 2].trim() : "unknown_city";
-                    String gender = cityPopIdx >= 5 ? allParts[cityPopIdx - 3].trim() : "M";
-                    
-                    // category is at cityPopIdx-4
-                    String category = cityPopIdx >= 6 ? allParts[cityPopIdx - 4].trim() : "unknown_category";
-                    
-                    // merchant = everything from index 2 to cityPopIdx-5 (inclusive), joined with commas
-                    int merchantEnd = cityPopIdx - 5;
-                    StringBuilder merchantBuilder = new StringBuilder();
-                    for (int i = 2; i <= merchantEnd; i++) {
-                        if (merchantBuilder.length() > 0) merchantBuilder.append(", ");
-                        merchantBuilder.append(allParts[i].trim());
-                    }
-                    String merchant = merchantBuilder.length() > 0 ? merchantBuilder.toString() : "unknown_merchant";
+                    int cityPop = 1000;
+                    try {
+                        cityPop = Integer.parseInt(getColValue(parts, colIndex, new String[]{"city_pop", "citypop", "population"}, "1000"));
+                    } catch (NumberFormatException e) {}
 
-                    String transId = UUID.randomUUID().toString();
+                    String job = getColValue(parts, colIndex, new String[]{"job", "profession"}, "unknown_job");
+                    String dob = getColValue(parts, colIndex, new String[]{"dob", "date_of_birth"}, "1990-01-01");
+
+                    double lat = 0.0;
+                    try {
+                        lat = Double.parseDouble(getColValue(parts, colIndex, new String[]{"lat", "latitude"}, "0.0"));
+                    } catch (NumberFormatException e) {}
+
+                    double lon = 0.0;
+                    try {
+                        lon = Double.parseDouble(getColValue(parts, colIndex, new String[]{"long", "longitude"}, "0.0"));
+                    } catch (NumberFormatException e) {}
+
+                    double merchLat = 0.0;
+                    try {
+                        merchLat = Double.parseDouble(getColValue(parts, colIndex, new String[]{"merch_lat", "merch_latitude"}, "0.0"));
+                    } catch (NumberFormatException e) {}
+
+                    double merchLon = 0.0;
+                    try {
+                        merchLon = Double.parseDouble(getColValue(parts, colIndex, new String[]{"merch_long", "merch_longitude"}, "0.0"));
+                    } catch (NumberFormatException e) {}
+
+                    String transDate = getColValue(parts, colIndex, new String[]{"trans_date", "trans_date_trans_time", "date"}, new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                    String transId = getColValue(parts, colIndex, new String[]{"trans_num", "trans_id", "id"}, UUID.randomUUID().toString());
 
                     // Query prediction inline from ML service
                     HttpHeaders headers = new HttpHeaders();
