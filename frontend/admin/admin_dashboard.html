@@ -141,9 +141,9 @@
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
                     href="/index.html">Accueil</a>
                 <a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1"
-                    href="/admin/admin_dashboard.html">Surveillance Live</a>
+                    href="/admin/admin_dashboard.html">Dashboard</a>
                 <a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors duration-200"
-                    href="/admin/csv_analysis.html">Analyse Batch CSV</a>
+                    href="/admin/csv_analysis.html">Analyser</a>
             </nav>
         </div>
 
@@ -189,17 +189,22 @@
                 </p>
             </div>
             <div class="flex items-center gap-md">
-                <button id="toggle-streaming-btn" class="glass-panel px-lg py-sm rounded-lg border border-outline-variant/30 hover:bg-surface-bright flex items-center gap-2 transition-all group">
-                    <span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform" id="toggle-streaming-icon">pause</span>
-                    <span class="font-label-md text-label-md uppercase tracking-widest text-on-surface" id="toggle-streaming-text">Pause</span>
+                <button id="toggle-streaming-btn"
+                    class="glass-panel px-lg py-sm rounded-lg border border-outline-variant/30 hover:bg-surface-bright flex items-center gap-2 transition-all group">
+                    <span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform"
+                        id="toggle-streaming-icon">pause</span>
+                    <span class="font-label-md text-label-md uppercase tracking-widest text-on-surface"
+                        id="toggle-streaming-text">Pause</span>
                 </button>
-                <div id="live-indicator-panel" class="glass-panel px-lg py-sm rounded-lg border-l-4 border-secondary flex items-center gap-md transition-all">
+                <div id="live-indicator-panel"
+                    class="glass-panel px-lg py-sm rounded-lg border-l-4 border-secondary flex items-center gap-md transition-all">
                     <span class="relative flex h-3 w-3" id="live-indicator-dot">
                         <span
                             class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-secondary"></span>
                     </span>
-                    <span class="font-label-md text-label-md text-secondary uppercase tracking-widest transition-colors" id="live-tx-count">En
+                    <span class="font-label-md text-label-md text-secondary uppercase tracking-widest transition-colors"
+                        id="live-tx-count">En
                         Direct : Chargement...</span>
                 </div>
             </div>

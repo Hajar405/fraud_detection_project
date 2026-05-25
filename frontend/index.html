@@ -1,112 +1,123 @@
-<!DOCTYPE html><html class="dark" lang="fr" style=""><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "primary": "#adc6ff",
-                    "on-tertiary-container": "#5b0017",
-                    "surface-tint": "#adc6ff",
-                    "surface-container-highest": "#273647",
-                    "on-secondary-container": "#00311f",
-                    "background": "#051424",
-                    "on-error-container": "#ffdad6",
-                    "tertiary-fixed": "#ffdadb",
-                    "tertiary-container": "#ff516a",
-                    "surface-container-lowest": "#010f1f",
-                    "on-primary-fixed-variant": "#004395",
-                    "surface-container-low": "#0d1c2d",
-                    "surface-container-high": "#1c2b3c",
-                    "on-secondary": "#003824",
-                    "outline-variant": "#424754",
-                    "secondary-container": "#00a572",
-                    "primary-container": "#4d8eff",
-                    "error": "#ffb4ab",
-                    "on-secondary-fixed": "#002113",
-                    "on-surface": "#d4e4fa",
-                    "on-primary-container": "#00285d",
-                    "tertiary-fixed-dim": "#ffb2b7",
-                    "on-surface-variant": "#c2c6d6",
-                    "surface": "#051424",
-                    "primary-fixed-dim": "#adc6ff",
-                    "on-primary-fixed": "#001a42",
-                    "error-container": "#93000a",
-                    "on-tertiary-fixed-variant": "#92002a",
-                    "on-error": "#690005",
-                    "secondary": "#4edea3",
-                    "on-secondary-fixed-variant": "#005236",
-                    "outline": "#8c909f",
-                    "inverse-primary": "#005ac2",
-                    "surface-variant": "#273647",
-                    "surface-dim": "#051424",
-                    "inverse-on-surface": "#233143",
-                    "secondary-fixed": "#6ffbbe",
-                    "on-tertiary-fixed": "#40000d",
-                    "tertiary": "#ffb2b7",
-                    "surface-bright": "#2c3a4c",
-                    "on-background": "#d4e4fa",
-                    "surface-container": "#122131",
-                    "inverse-surface": "#d4e4fa",
-                    "on-primary": "#002e6a",
-                    "primary-fixed": "#d8e2ff",
-                    "secondary-fixed-dim": "#4edea3",
-                    "on-tertiary": "#67001b"
+<!DOCTYPE html>
+<html class="dark" lang="fr" style="">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#adc6ff",
+                        "on-tertiary-container": "#5b0017",
+                        "surface-tint": "#adc6ff",
+                        "surface-container-highest": "#273647",
+                        "on-secondary-container": "#00311f",
+                        "background": "#051424",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdadb",
+                        "tertiary-container": "#ff516a",
+                        "surface-container-lowest": "#010f1f",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-container-low": "#0d1c2d",
+                        "surface-container-high": "#1c2b3c",
+                        "on-secondary": "#003824",
+                        "outline-variant": "#424754",
+                        "secondary-container": "#00a572",
+                        "primary-container": "#4d8eff",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#002113",
+                        "on-surface": "#d4e4fa",
+                        "on-primary-container": "#00285d",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface": "#051424",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-fixed": "#001a42",
+                        "error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#92002a",
+                        "on-error": "#690005",
+                        "secondary": "#4edea3",
+                        "on-secondary-fixed-variant": "#005236",
+                        "outline": "#8c909f",
+                        "inverse-primary": "#005ac2",
+                        "surface-variant": "#273647",
+                        "surface-dim": "#051424",
+                        "inverse-on-surface": "#233143",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-tertiary-fixed": "#40000d",
+                        "tertiary": "#ffb2b7",
+                        "surface-bright": "#2c3a4c",
+                        "on-background": "#d4e4fa",
+                        "surface-container": "#122131",
+                        "inverse-surface": "#d4e4fa",
+                        "on-primary": "#002e6a",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-tertiary": "#67001b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "margin-desktop": "32px",
+                        "md": "16px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["10px", { "lineHeight": "12px", "fontWeight": "700" }]
+                    }
+                },
             },
-            "borderRadius": {
-                    "DEFAULT": "0.125rem",
-                    "lg": "0.25rem",
-                    "xl": "0.5rem",
-                    "full": "0.75rem"
-            },
-            "spacing": {
-                    "base": "4px",
-                    "xs": "4px",
-                    "margin-mobile": "16px",
-                    "gutter": "20px",
-                    "sm": "8px",
-                    "lg": "24px",
-                    "margin-desktop": "32px",
-                    "md": "16px",
-                    "xl": "40px"
-            },
-            "fontFamily": {
-                    "headline-md": ["Hanken Grotesk"],
-                    "label-md": ["JetBrains Mono"],
-                    "body-lg": ["Inter"],
-                    "body-md": ["Inter"],
-                    "headline-sm": ["Hanken Grotesk"],
-                    "headline-lg": ["Hanken Grotesk"],
-                    "label-sm": ["JetBrains Mono"]
-            },
-            "fontSize": {
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                    "label-sm": ["10px", {"lineHeight": "12px", "fontWeight": "700"}]
-            }
-          },
-        },
-      }
+        }
     </script>
-<style>
+    <style>
         .glass {
             background: rgba(22, 27, 34, 0.6);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(173, 198, 255, 0.1);
         }
+
         .hero-glow {
             background: radial-gradient(circle at center, rgba(173, 198, 255, 0.15) 0%, transparent 70%);
         }
+
         .scanline {
             width: 100%;
             height: 2px;
@@ -114,213 +125,266 @@
             position: absolute;
             animation: scan 4s linear infinite;
         }
+
         @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
         }
     </style>
 </head>
+
 <body class="bg-background text-on-background font-body-md selection:bg-primary/30">
-<!-- TopNavBar -->
-<header class="bg-background/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/5">
-<nav class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-7xl mx-auto">
-<div class="flex items-center gap-3">
-    <div
-        class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
-        <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
-            style="font-variation-settings: 'FILL' 1;">security</span>
-    </div>
-    <div>
-        <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
-            AI</span>
-    </div>
-</div>
-<div class="hidden md:flex gap-lg items-center">
-<a class="text-primary border-b-2 border-primary pb-1 font-bold text-label-md font-label-md" href="#">Accueil</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">Dashboard</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md" href="#">Analyser</a>
+    <!-- TopNavBar -->
+    <header class="bg-background/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/5">
+        <nav class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 bg-secondary flex items-center justify-center rounded-lg shadow-lg shadow-secondary/10">
+                    <span class="material-symbols-outlined text-surface-container-lowest text-2xl"
+                        style="font-variation-settings: 'FILL' 1;">security</span>
+                </div>
+                <div>
+                    <span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">FraudGuard
+                        AI</span>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-lg items-center">
+                <a class="text-primary border-b-2 border-primary pb-1 font-bold text-label-md font-label-md"
+                    href="#">Accueil</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md"
+                    href="#">Dashboard</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-200 text-label-md font-label-md"
+                    href="#">Analyser</a>
 
-</div>
-<div class="flex items-center gap-md" id="auth-buttons-container">
-<a id="btn-login" class="hidden sm:block text-on-surface hover:text-primary transition-colors duration-200 font-label-md text-label-md cursor-pointer" href="/login.html#login">Se connecter</a>
-<a id="btn-register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded hover:scale-95 transition-transform duration-150 font-label-md text-label-md font-bold flex items-center justify-center cursor-pointer" href="/login.html#register">S'inscrire</a>
-</div>
+            </div>
+            <div class="flex items-center gap-md" id="auth-buttons-container">
+                <a id="btn-login"
+                    class="hidden sm:block text-on-surface hover:text-primary transition-colors duration-200 font-label-md text-label-md cursor-pointer"
+                    href="/login.html#login">Se connecter</a>
+                <a id="btn-register"
+                    class="bg-primary-container text-on-primary-container px-lg py-sm rounded hover:scale-95 transition-transform duration-150 font-label-md text-label-md font-bold flex items-center justify-center cursor-pointer"
+                    href="/login.html#register">S'inscrire</a>
+            </div>
 
-<!-- Authenticated User Profile (Hidden by default) -->
-<div class="hidden items-center gap-md" id="auth-profile-container">
-    <div class="text-right hidden lg:block mr-2">
-        <p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">Chargement...</p>
-        <p id="user-display-role" class="font-label-sm text-[10px] text-outline">Utilisateur</p>
-    </div>
-    <button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full" title="Déconnexion">
-        <span class="material-symbols-outlined text-primary">logout</span>
-    </button>
-    <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
-        <img alt="User Profile Picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI">
-    </div>
-</div>
+            <!-- Authenticated User Profile (Hidden by default) -->
+            <div class="hidden items-center gap-md" id="auth-profile-container">
+                <div class="text-right hidden lg:block mr-2">
+                    <p id="user-display-name" class="font-label-md text-label-md font-bold text-on-surface">
+                        Chargement...</p>
+                    <p id="user-display-role" class="font-label-sm text-[10px] text-outline">Utilisateur</p>
+                </div>
+                <button id="logout-btn" class="p-2 hover:bg-white/5 transition-colors duration-200 rounded-full"
+                    title="Déconnexion">
+                    <span class="material-symbols-outlined text-primary">logout</span>
+                </button>
+                <div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant/30 ml-2">
+                    <img alt="User Profile Picture"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX9s9fEompPUHQ9S7mmXnY7M2Cj4NaUkFhc1C52H-l14znElLfpPf7WYK0UbQc9eRUsuBxpbXIrgubaSFKXICgF6T3bx3NdgXXIYY1JViXaRGO0-3ai-zAqAETzb93vNnxh-b2dSrWab6FQr5vGEB22Z7OGwfojrbUnkGwSO8K-Jdyj943br5R1Y-bOB4P9Hul25s9HWpS-uD0KyAfhldPehWwHSVPJO84_dYvGluWgHBGECyEmzSm1cLLBuU0mlVpeewHe4KnYQzI">
+                </div>
+            </div>
 
-</nav>
-</header>
-<main>
-<!-- Hero Section -->
-<section class="relative min-h-[819px] flex items-center justify-center overflow-hidden pt-xl">
-<div class="absolute inset-0 hero-glow" style="transform: translate(2.40625px, 1.01777px);"></div>
-<div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
-<div class="scanline"></div>
-</div>
-<div class="container mx-auto px-margin-desktop relative z-10 text-center">
-<div class="inline-flex items-center gap-sm bg-surface-container-low border border-primary/20 px-md py-xs rounded-full mb-lg">
-<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-<span class="text-label-sm font-label-sm text-primary uppercase tracking-widest">Advanced Fraud Shield v4.2 Active</span>
-</div>
-<h1 class="text-headline-lg font-headline-lg text-white mb-md max-w-4xl mx-auto leading-tight">
-                    Intelligence Artificielle de Haute Précision pour la <span class="text-primary">Sécurité Financière</span>
-</h1>
-<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-xl">
-                    FraudGuard AI utilise des modèles ML XGBoost de pointe et des analyses de graphes Neo4j pour neutraliser les menaces complexes en temps réel.
+        </nav>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-[819px] flex items-center justify-center overflow-hidden pt-xl">
+            <div class="absolute inset-0 hero-glow" style="transform: translate(2.40625px, 1.01777px);"></div>
+            <div class="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20">
+                <div class="scanline"></div>
+            </div>
+            <div class="container mx-auto px-margin-desktop relative z-10 text-center">
+                <div
+                    class="inline-flex items-center gap-sm bg-surface-container-low border border-primary/20 px-md py-xs rounded-full mb-lg">
+                    <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                    <span class="text-label-sm font-label-sm text-primary uppercase tracking-widest">Advanced Fraud
+                        Shield v4.2 Active</span>
+                </div>
+                <h1 class="text-headline-lg font-headline-lg text-white mb-md max-w-4xl mx-auto leading-tight">
+                    Intelligence Artificielle de Haute Précision pour la <span class="text-primary">Sécurité
+                        Financière</span>
+                </h1>
+                <p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-xl">
+                    FraudGuard AI utilise des modèles ML XGBoost de pointe et des analyses de graphes Neo4j pour
+                    neutraliser les menaces complexes en temps réel.
                 </p>
-<div class="flex flex-col sm:flex-row gap-md justify-center">
-<a id="btn-hero-login" class="px-xl py-md bg-primary text-on-primary font-bold rounded-lg shadow-[0_0_15px_rgba(173,198,255,0.4)] hover:shadow-[0_0_25px_rgba(173,198,255,0.6)] transition-all flex items-center justify-center cursor-pointer" href="/login.html#login">Connexion</a>
-</div>
-<!-- Dashboard Preview -->
-<div class="mt-xl mx-auto max-w-5xl glass rounded-xl p-base border border-white/10 shadow-2xl relative transition-all duration-700 opacity-100 translate-y-0">
-<img alt="Interface de dashboard" class="w-full rounded-lg" data-alt="A sophisticated digital dashboard showing complex financial network graphs and real-time data visualizations in a deep midnight blue environment. The UI features glowing nodes, cyan and electric blue lines, and detailed statistical widgets with high-contrast text. The lighting is low-key with a cinematic tech-noir atmosphere, emphasizing data density and technical authority." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcT_Iz6cbGSRI22fANVo4t4oWCxzLsWJxU502aJIpX9Eqkv5BpSJ0uEGx6C2cQhH9MlbyDu_AQrTJug1Ugs8zfPSp5W9qW4hZCXE2RqQeuN91daT5mWWHQb-FHK88Y_blwc-spyUR6XZE4yJaF6C8Mp1svk9hzv2T1PAHBcQeWrgjH3vBelBXs1HstsC8jTJefjCv195NXB-oNz87sxRKZrELZ2THP7GULittSauUVnYV_5hDjNxnpx_OdeRVTY58hHjJnFEF6uxYH">
-<div class="absolute -bottom-6 -right-6 hidden md:block glass p-lg rounded-xl border border-secondary/30 transition-all duration-700 opacity-100 translate-y-0">
-<div class="flex items-center gap-sm text-secondary">
-<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
-<span class="font-label-md text-label-md">Système Intègre</span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Services Section: Bento Grid -->
-<section class="py-xl bg-surface-container-lowest">
-<div class="container mx-auto px-margin-desktop">
-<div class="mb-xl">
-<h2 class="text-headline-md font-headline-md text-white">Nos Services de Détection</h2>
-<p class="text-on-surface-variant text-body-md font-body-md">Infrastructure de défense multicouche</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
-<!-- Real-time Analysis -->
-<div class="glass p-lg rounded-xl border-l-4 border-l-primary hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
-<div class="w-12 h-12 rounded bg-primary/10 flex items-center justify-center text-primary mb-md">
-<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-white mb-sm">Analyse Temps Réel</h3>
-<p class="text-on-surface-variant text-body-md font-body-md mb-md">
-                            Moteurs ML propriétaires basés sur XGBoost pour une détection à la microseconde lors de l'exécution des transactions.
+                <div class="flex flex-col sm:flex-row gap-md justify-center">
+                    <a id="btn-hero-login"
+                        class="px-xl py-md bg-primary text-on-primary font-bold rounded-lg shadow-[0_0_15px_rgba(173,198,255,0.4)] hover:shadow-[0_0_25px_rgba(173,198,255,0.6)] transition-all flex items-center justify-center cursor-pointer"
+                        href="/login.html#login">Connexion</a>
+                </div>
+                <!-- Dashboard Preview -->
+                <div
+                    class="mt-xl mx-auto max-w-5xl glass rounded-xl p-base border border-white/10 shadow-2xl relative transition-all duration-700 opacity-100 translate-y-0">
+                    <img alt="Interface de dashboard" class="w-full rounded-lg"
+                        data-alt="A sophisticated digital dashboard showing complex financial network graphs and real-time data visualizations in a deep midnight blue environment. The UI features glowing nodes, cyan and electric blue lines, and detailed statistical widgets with high-contrast text. The lighting is low-key with a cinematic tech-noir atmosphere, emphasizing data density and technical authority."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcT_Iz6cbGSRI22fANVo4t4oWCxzLsWJxU502aJIpX9Eqkv5BpSJ0uEGx6C2cQhH9MlbyDu_AQrTJug1Ugs8zfPSp5W9qW4hZCXE2RqQeuN91daT5mWWHQb-FHK88Y_blwc-spyUR6XZE4yJaF6C8Mp1svk9hzv2T1PAHBcQeWrgjH3vBelBXs1HstsC8jTJefjCv195NXB-oNz87sxRKZrELZ2THP7GULittSauUVnYV_5hDjNxnpx_OdeRVTY58hHjJnFEF6uxYH">
+                    <div
+                        class="absolute -bottom-6 -right-6 hidden md:block glass p-lg rounded-xl border border-secondary/30 transition-all duration-700 opacity-100 translate-y-0">
+                        <div class="flex items-center gap-sm text-secondary">
+                            <span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+                            <span class="font-label-md text-label-md">Système Intègre</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services Section: Bento Grid -->
+        <section class="py-xl bg-surface-container-lowest">
+            <div class="container mx-auto px-margin-desktop">
+                <div class="mb-xl">
+                    <h2 class="text-headline-md font-headline-md text-white">Nos Services de Détection</h2>
+                    <p class="text-on-surface-variant text-body-md font-body-md">Infrastructure de défense multicouche
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+                    <!-- Real-time Analysis -->
+                    <div
+                        class="glass p-lg rounded-xl border-l-4 border-l-primary hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
+                        <div
+                            class="w-12 h-12 rounded bg-primary/10 flex items-center justify-center text-primary mb-md">
+                            <span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+                        </div>
+                        <h3 class="text-headline-sm font-headline-sm text-white mb-sm">Analyse Temps Réel</h3>
+                        <p class="text-on-surface-variant text-body-md font-body-md mb-md">
+                            Moteurs ML propriétaires basés sur XGBoost pour une détection à la microseconde lors de
+                            l'exécution des transactions.
                         </p>
-<div class="text-label-sm font-label-sm text-primary uppercase">Moteur : Sentinel-XGB</div>
-</div>
-<!-- Graph Visualization -->
-<div class="glass p-lg rounded-xl border-l-4 border-l-secondary hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
-<div class="w-12 h-12 rounded bg-secondary/10 flex items-center justify-center text-secondary mb-md">
-<span class="material-symbols-outlined" data-icon="hub">hub</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-white mb-sm">Visualisation de Graphes</h3>
-<p class="text-on-surface-variant text-body-md font-body-md mb-md">
-                            Intégration Neo4j pour cartographier les relations complexes et identifier les réseaux de blanchiment d'argent.
+                        <div class="text-label-sm font-label-sm text-primary uppercase">Moteur : Sentinel-XGB</div>
+                    </div>
+                    <!-- Graph Visualization -->
+                    <div
+                        class="glass p-lg rounded-xl border-l-4 border-l-secondary hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
+                        <div
+                            class="w-12 h-12 rounded bg-secondary/10 flex items-center justify-center text-secondary mb-md">
+                            <span class="material-symbols-outlined" data-icon="hub">hub</span>
+                        </div>
+                        <h3 class="text-headline-sm font-headline-sm text-white mb-sm">Visualisation de Graphes</h3>
+                        <p class="text-on-surface-variant text-body-md font-body-md mb-md">
+                            Intégration Neo4j pour cartographier les relations complexes et identifier les réseaux de
+                            blanchiment d'argent.
                         </p>
-<div class="text-label-sm font-label-sm text-secondary uppercase">DB : Neo4j Enterprise</div>
-</div>
-<!-- Batch Analysis -->
-<div class="glass p-lg rounded-xl border-l-4 border-l-tertiary-container hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
-<div class="w-12 h-12 rounded bg-tertiary-container/10 flex items-center justify-center text-tertiary-container mb-md">
-<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
-</div>
-<h3 class="text-headline-sm font-headline-sm text-white mb-sm">Analyse Batch</h3>
-<p class="text-on-surface-variant text-body-md font-body-md mb-md">
-                            Importez vos historiques CSV pour des audits forensiques profonds et une rétro-détection des anomalies passées.
+                        <div class="text-label-sm font-label-sm text-secondary uppercase">DB : Neo4j Enterprise</div>
+                    </div>
+                    <!-- Batch Analysis -->
+                    <div
+                        class="glass p-lg rounded-xl border-l-4 border-l-tertiary-container hover:translate-y-[-4px] transition-transform duration-300 transition-all duration-700 opacity-100 translate-y-0">
+                        <div
+                            class="w-12 h-12 rounded bg-tertiary-container/10 flex items-center justify-center text-tertiary-container mb-md">
+                            <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+                        </div>
+                        <h3 class="text-headline-sm font-headline-sm text-white mb-sm">Analyse Batch</h3>
+                        <p class="text-on-surface-variant text-body-md font-body-md mb-md">
+                            Importez vos historiques CSV pour des audits forensiques profonds et une rétro-détection des
+                            anomalies passées.
                         </p>
-<div class="text-label-sm font-label-sm text-tertiary-container uppercase">Pipeline : CSV / Parquet</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Why Choose Us -->
-<section class="py-xl">
-<div class="container mx-auto px-margin-desktop">
+                        <div class="text-label-sm font-label-sm text-tertiary-container uppercase">Pipeline : CSV /
+                            Parquet</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Why Choose Us -->
+        <section class="py-xl">
+            <div class="container mx-auto px-margin-desktop">
 
-</div>
-</section>
-<!-- Stats Counter -->
-<section class="py-xl border-y border-white/5">
-<div class="container mx-auto px-margin-desktop">
-<div class="grid grid-cols-2 md:grid-cols-4 gap-lg text-center">
-<div>
-<div class="text-headline-lg font-headline-lg text-primary">99.9%</div>
-<div class="text-label-md font-label-md text-on-surface-variant uppercase">Précision</div>
-</div>
-<div>
-<div class="text-headline-lg font-headline-lg text-primary">15ms</div>
-<div class="text-label-md font-label-md text-on-surface-variant uppercase">Latence</div>
-</div>
-<div>
-<div class="text-headline-lg font-headline-lg text-primary">2.4B</div>
-<div class="text-label-md font-label-md text-on-surface-variant uppercase">Tx Analysées</div>
-</div>
-<div>
-<div class="text-headline-lg font-headline-lg text-primary">24/7</div>
-<div class="text-label-md font-label-md text-on-surface-variant uppercase">Vigilance</div>
-</div>
-</div>
-</div>
-</section>
-</main>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest border-t border-white/5 mt-xl">
-<div class="flex flex-col md:flex-row justify-between items-start w-full px-margin-desktop py-xl gap-lg max-w-7xl mx-auto">
-<div class="max-w-xs">
-<div class="text-headline-sm font-headline-sm font-bold text-primary mb-md">SENTINEL.AI</div>
-<p class="text-body-md font-body-md text-on-surface-variant mb-md">
-                    Systèmes de sécurité financière haute performance. Protéger l'économie numérique par l'innovation constante.
+            </div>
+        </section>
+        <!-- Stats Counter -->
+        <section class="py-xl border-y border-white/5">
+            <div class="container mx-auto px-margin-desktop">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-lg text-center">
+                    <div>
+                        <div class="text-headline-lg font-headline-lg text-primary">99.9%</div>
+                        <div class="text-label-md font-label-md text-on-surface-variant uppercase">Précision</div>
+                    </div>
+                    <div>
+                        <div class="text-headline-lg font-headline-lg text-primary">15ms</div>
+                        <div class="text-label-md font-label-md text-on-surface-variant uppercase">Latence</div>
+                    </div>
+                    <div>
+                        <div class="text-headline-lg font-headline-lg text-primary">2.4B</div>
+                        <div class="text-label-md font-label-md text-on-surface-variant uppercase">Tx Analysées</div>
+                    </div>
+                    <div>
+                        <div class="text-headline-lg font-headline-lg text-primary">24/7</div>
+                        <div class="text-label-md font-label-md text-on-surface-variant uppercase">Vigilance</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer class="bg-surface-container-lowest border-t border-white/5 mt-xl">
+        <div
+            class="flex flex-col md:flex-row justify-between items-start w-full px-margin-desktop py-xl gap-lg max-w-7xl mx-auto">
+            <div class="max-w-xs">
+                <div class="text-headline-sm font-headline-sm font-bold text-primary mb-md">SENTINEL.AI</div>
+                <p class="text-body-md font-body-md text-on-surface-variant mb-md">
+                    Systèmes de sécurité financière haute performance. Protéger l'économie numérique par l'innovation
+                    constante.
                 </p>
-<div class="flex gap-md">
-<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span></a>
-<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined" data-icon="terminal">terminal</span></a>
-<a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined" data-icon="public">public</span></a>
-</div>
-</div>
-<div class="grid grid-cols-2 gap-xl">
-<div>
-<h5 class="text-label-sm font-label-sm text-white uppercase mb-md">Navigation</h5>
-<ul class="space-y-sm">
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Accueil</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Services</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Dashboard</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Contact</a></li>
-</ul>
-</div>
-<div>
-<h5 class="text-label-sm font-label-sm text-white uppercase mb-md">Légal</h5>
-<ul class="space-y-sm">
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Security Protocol</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Privacy Shield (RGPD)</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">API Documentation</a></li>
-<li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md" href="#">Terms of Service</a></li>
-</ul>
-</div>
-</div>
-</div>
-<div class="max-w-7xl mx-auto px-margin-desktop py-md border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-md">
-<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">© 2024 SENTINEL.AI FINANCIAL SECURITY SYSTEMS. AUTHORIZED PERSONNEL ONLY.</span>
-<div class="flex items-center gap-sm">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span class="text-label-sm font-label-sm text-secondary">TOUS SYSTÈMES OPÉRATIONNELS</span>
-</div>
-</div>
-</footer>
-<script>
+                <div class="flex gap-md">
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span
+                            class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span></a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span
+                            class="material-symbols-outlined" data-icon="terminal">terminal</span></a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#"><span
+                            class="material-symbols-outlined" data-icon="public">public</span></a>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-xl">
+                <div>
+                    <h5 class="text-label-sm font-label-sm text-white uppercase mb-md">Navigation</h5>
+                    <ul class="space-y-sm">
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Accueil</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Services</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Dashboard</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-label-sm font-label-sm text-white uppercase mb-md">Légal</h5>
+                    <ul class="space-y-sm">
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Security Protocol</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Privacy Shield (RGPD)</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">API Documentation</a></li>
+                        <li class=""><a class="text-on-surface-variant hover:text-secondary text-body-md font-body-md"
+                                href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-7xl mx-auto px-margin-desktop py-md border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-md">
+            <span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">© 2024
+                SENTINEL.AI FINANCIAL SECURITY SYSTEMS. AUTHORIZED PERSONNEL ONLY.</span>
+            <div class="flex items-center gap-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                <span class="text-label-sm font-label-sm text-secondary">TOUS SYSTÈMES OPÉRATIONNELS</span>
+            </div>
+        </div>
+    </footer>
+    <script>
         // Micro-interactions and subtle parallax
         document.addEventListener('mousemove', (e) => {
             const amount = 5;
             const x = (e.clientX / window.innerWidth - 0.5) * amount;
             const y = (e.clientY / window.innerHeight - 0.5) * amount;
-            
+
             const dashboardPreview = document.querySelector('.hero-glow');
-            if(dashboardPreview) {
+            if (dashboardPreview) {
                 dashboardPreview.style.transform = `translate(${x}px, ${y}px)`;
             }
         });
@@ -358,24 +422,24 @@
             if (profileContainer) {
                 profileContainer.classList.remove('hidden');
                 profileContainer.classList.add('flex');
-                
+
                 // Fetch profile data
                 fetch('/api/auth/me', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 })
-                .then(res => {
-                    if(res.ok) return res.json();
-                    throw new Error("Not authorized");
-                })
-                .then(profile => {
-                    document.getElementById('user-display-name').innerText = profile.fullName || (username ? username.split('@')[0] : 'Utilisateur');
-                    document.getElementById('user-display-role').innerText = role === 'ADMIN' ? 'Admin / Analyste' : 'Utilisateur';
-                })
-                .catch(() => {
-                    // If token invalid, clear and reset
-                    localStorage.clear();
-                    window.location.reload();
-                });
+                    .then(res => {
+                        if (res.ok) return res.json();
+                        throw new Error("Not authorized");
+                    })
+                    .then(profile => {
+                        document.getElementById('user-display-name').innerText = profile.fullName || (username ? username.split('@')[0] : 'Utilisateur');
+                        document.getElementById('user-display-role').innerText = role === 'ADMIN' ? 'Admin / Analyste' : 'Utilisateur';
+                    })
+                    .catch(() => {
+                        // If token invalid, clear and reset
+                        localStorage.clear();
+                        window.location.reload();
+                    });
             }
 
             // Setup logout
@@ -402,6 +466,8 @@
         function goAnalyser() {
             if (!token) {
                 window.location.href = '/login.html';
+            } else if (role === 'ADMIN') {
+                window.location.href = '/admin/csv_analysis.html';
             } else {
                 window.location.href = '/user/simulation.html';
             }
@@ -429,5 +495,6 @@
     </script>
 
 
-</body></html>
+</body>
 
+</html>

@@ -18,6 +18,20 @@ document.getElementById('logout-btn').addEventListener('click', () => {
     window.location.href = '/login.html';
 });
 
+// ── Dynamic Navigation ────────────────────────────────────────────────────────
+const role = localStorage.getItem('role');
+const navDashboard = document.getElementById('nav-dashboard');
+if (navDashboard) {
+    navDashboard.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (role === 'ADMIN') {
+            window.location.href = '/admin/admin_dashboard.html';
+        } else {
+            window.location.href = '/user/user_dashboard.html';
+        }
+    });
+}
+
 // ── Utility: mask card number ─────────────────────────────────────────────────
 function maskCardNumber(card) {
     if (!card) return 'INCONNUE';
