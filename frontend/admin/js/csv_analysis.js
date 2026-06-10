@@ -117,7 +117,17 @@ async function handleFileUpload(file) {
         clearInterval(progressInterval);
 
         if (!response.ok) {
-            throw new Error("Failed to upload batch CSV file.");
+            const errData = await response.json().catch(() => ({}));
+            if (response.status === 503) {
+                document.getElementById('progress-title').innerText = 'Service indisponible';
+                document.getElementById('progress-pct').innerText = 'Erreur';
+                document.getElementById('progress-pct').className = 'font-label-md text-label-md text-error';
+                document.getElementById('progress-bar').className = 'h-full bg-error w-[100%]';
+                document.getElementById('status-label').innerText = errData.error || 'Le service d\'analyse est temporairement indisponible. Veuillez réessayer plus tard.';
+            } else {
+                throw new Error('Erreur lors du traitement du fichier CSV.');
+            }
+            return;
         }
 
         const data = await response.json();

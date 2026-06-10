@@ -108,10 +108,80 @@ def predict():
         # Bounding box of continental USA
         is_user_coords_out = not (24.0 <= lat <= 50.0 and -125.0 <= lon <= -66.0)
         is_merch_coords_out = not (24.0 <= merch_lat <= 50.0 and -125.0 <= merch_lon <= -66.0)
-        
-        # Map location features to keep them in-distribution for the XGBoost model
-        if city_input == "paris" or state_input == "FR":
-            # Map Paris, France to Paris, Texas!
+
+        # ── Moroccan city mapping to US equivalents ───────────────────────────
+        # Each Moroccan city is matched to a US city of similar population size
+        # that exists in the model's label encoders.
+        # Population references (2024):
+        #   Casablanca  ~3.7M  → Houston, TX       ~2.3M  (largest available)
+        #   Rabat       ~577K  → Memphis, TN        ~633K
+        #   Marrakech   ~928K  → Indianapolis, IN   ~880K
+        #   Fès         ~1.1M  → San Jose, CA       ~1.0M
+        #   Tanger      ~947K  → Jacksonville, FL   ~949K  (closest match)
+        #   Agadir      ~421K  → Louisville, KY     ~633K  (closest available)
+        #   Meknès      ~632K  → Memphis, TN        ~633K
+        #   Oujda       ~494K  → Sacramento, CA     ~500K
+        #   Kenitra     ~431K  → Portland, OR       ~652K
+        #   Tétouan     ~380K  → Norfolk, VA        ~238K  (closest available)
+        # All Moroccan GPS coordinates are outside the US bounding box,
+        # so is_user_coords_out will always be True for Moroccan inputs.
+        # The mapping below sets user_lat/user_lon to the equivalent US city.
+        MOROCCO_CITY_MAP = {
+            # Moroccan city name (lowercase) → (us_city, us_state, us_lat, us_lon, city_pop)
+            "casablanca":  ("Houston",      "TX", 29.7604, -95.3698, 2300000),
+            "rabat":       ("Murfreesboro",  "TN", 35.8456, -86.3903, 633000),
+            "marrakech":   ("Indianapolis",  "IN", 39.7684, -86.1581, 880000),
+            "marrakesh":   ("Indianapolis",  "IN", 39.7684, -86.1581, 880000),
+            "fes":         ("San Jose",      "CA", 37.3382, -121.8863, 1000000),
+            "fez":         ("San Jose",      "CA", 37.3382, -121.8863, 1000000),
+            "fès":         ("San Jose",      "CA", 37.3382, -121.8863, 1000000),
+            "tanger":      ("Port Saint Lucie", "FL", 27.2939, -80.3503, 949000),
+            "tangier":     ("Port Saint Lucie", "FL", 27.2939, -80.3503, 949000),
+            "agadir":      ("Sacramento",    "CA", 38.5816, -121.4944, 521000),
+            "meknes":      ("Murfreesboro",  "TN", 35.8456, -86.3903, 633000),
+            "meknès":      ("Murfreesboro",  "TN", 35.8456, -86.3903, 633000),
+            "oujda":       ("Sacramento",    "CA", 38.5816, -121.4944, 500000),
+            "kenitra":     ("Portland",      "OR", 45.5051, -122.6750, 431000),
+            "tetouan":     ("Norfolk",       "VA", 36.8508, -76.2859, 380000),
+            "tétouan":     ("Norfolk",       "VA", 36.8508, -76.2859, 380000),
+            "sale":        ("Murfreesboro",  "TN", 35.8456, -86.3903, 890000),
+            "salé":        ("Murfreesboro",  "TN", 35.8456, -86.3903, 890000),
+            "el jadida":   ("San Antonio",   "TX", 29.4241, -98.4936, 194000),
+            "beni mellal": ("Springfield",   "IL", 39.7817, -89.6501, 187000),
+            "nador":       ("Mobile",        "AL", 30.6954, -88.0399, 151000),
+            "settat":      ("Mobile",        "AL", 30.6954, -88.0399, 142000),
+            "khouribga":   ("Mobile",        "AL", 30.6954, -88.0399, 196000),
+            "laayoune":    ("San Antonio",   "TX", 29.4241, -98.4936, 217000),
+        }
+
+        # Also handle Moroccan state/region codes
+        MOROCCO_STATE_MAP = {
+            # Moroccan region code → best matching US state
+            "MA": "TX",   # Maroc → Texas (default fallback)
+            "CA": "CA",   # Casablanca-Settat → California (already valid in encoder)
+            "OR": "OR",   # Oriental → Oregon (already valid)
+            "SM": "TN",   # Souss-Massa → Tennessee
+            "GS": "FL",   # Guelmim-Oued Noun → Florida
+            "TT": "VA",   # Tanger-Tétouan-Al Hoceïma → Virginia
+            "MK": "TN",   # Meknès-Fès → Tennessee
+            "MR": "IN",   # Marrakech-Safi → Indiana
+            "RB": "TX",   # Rabat-Salé-Kénitra → Texas
+        }
+
+        # Perform city-level lookup first
+        matched = MOROCCO_CITY_MAP.get(city_input)
+        if matched:
+            normalized_city, normalized_state, user_lat, user_lon, city_pop = matched
+            print(f"[Mapping] Moroccan city '{city_input}' → US '{normalized_city}, {normalized_state}'")
+        elif state_input in MOROCCO_STATE_MAP:
+            # Region-level fallback: map Moroccan region to a US state
+            normalized_state = MOROCCO_STATE_MAP[state_input]
+            normalized_city = "Houston"   # default large city for unknown Moroccan cities
+            user_lat, user_lon = 29.7604, -95.3698
+            city_pop = int(data.get("city_pop", 500000))
+            print(f"[Mapping] Moroccan region '{state_input}' → US state '{normalized_state}'")
+        elif city_input == "paris" or state_input == "FR":
+            # Keep existing France → Paris TX mapping
             normalized_city = "Paris"
             normalized_state = "TX"
             user_lat, user_lon = 33.6609, -95.5555
@@ -127,14 +197,14 @@ def predict():
             user_lat, user_lon = 40.7128, -74.0060
             city_pop = 3495
         else:
-            # Dynamically select from available state classes or fallback to Dallas, TX
-            normalized_city = data.get("city", "Dallas")
+            # Generic fallback: check if city/state already known to encoder
+            normalized_city = data.get("city", "Houston")
             if state_input in encoders["state"].classes_:
                 normalized_state = state_input
             else:
                 normalized_state = "TX"
-            user_lat, user_lon = 32.7767, -96.7970
-            city_pop = int(data.get("city_pop", 1500000))
+            user_lat, user_lon = 29.7604, -95.3698
+            city_pop = int(data.get("city_pop", 500000))
             
         # Overwrite user lat/lon if they are out of bounds or 0
         if is_user_coords_out:

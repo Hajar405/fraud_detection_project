@@ -65,12 +65,9 @@ public class TransactionController {
                 ResponseEntity<Map> response = restTemplate.postForEntity(mlSidecarUrl, entity, Map.class);
                 prediction = response.getBody();
             } catch (Exception e) {
-                System.err.println("⚠️ Warning: Flask ML sidecar unreachable at " + mlSidecarUrl + ": " + e.getMessage());
-                // Return default fallback if ML service is down
-                prediction = new HashMap<>();
-                prediction.put("isFraud", amt > 250.0); // simple rule fallback
-                prediction.put("riskScore", amt > 250.0 ? 75.0 : 5.0);
-                prediction.put("confidenceScore", 50.0);
+                System.err.println("⚠️ ML sidecar indisponible : " + mlSidecarUrl + " : " + e.getMessage());
+                return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                        .body(Map.of("error", "Le service d'analyse est temporairement indisponible. Veuillez réessayer dans quelques instants."));
             }
 
             boolean isFraud = (Boolean) prediction.getOrDefault("isFraud", false);
@@ -304,8 +301,9 @@ public class TransactionController {
                         isFraud = (Boolean) pred.getOrDefault("isFraud", false);
                         riskScore = Double.parseDouble(pred.getOrDefault("riskScore", "0.0").toString());
                     } catch (Exception e) {
-                        isFraud = amt > 250.0;
-                        riskScore = amt > 250.0 ? 80.0 : 10.0;
+                        System.err.println("⚠️ ML sidecar indisponible lors du batch CSV : " + e.getMessage());
+                        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                                .body(Map.of("error", "Le service d'analyse est temporairement indisponible. L'import CSV ne peut pas être traité pour le moment."));
                     }
 
                     // Save to Neo4j

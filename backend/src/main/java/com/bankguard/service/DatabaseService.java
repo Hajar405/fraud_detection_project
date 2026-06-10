@@ -39,10 +39,12 @@ public class DatabaseService {
         }
     }
 
-    public boolean createUser(String username, String hashedPassword, String fullName, int age, 
+    public boolean createUser(String username, String hashedPassword, String fullName, int age,
+                              String gender, String dob,
                               String email, String phone, String address, String cardNumber, String role) {
         String cypher = "MERGE (u:User {username: $username}) " +
                         "ON CREATE SET u.password = $password, u.fullName = $fullName, u.age = $age, " +
+                        "              u.gender = $gender, u.dob = $dob, " +
                         "              u.email = $email, u.phone = $phone, u.address = $address, u.role = $role " +
                         "WITH u " +
                         "MERGE (c:Card {ccNum: $cardNumber}) " +
@@ -55,6 +57,8 @@ public class DatabaseService {
                 "password", hashedPassword,
                 "fullName", fullName,
                 "age", age,
+                "gender", gender,
+                "dob", dob,
                 "email", email,
                 "phone", phone,
                 "address", address,
@@ -94,6 +98,7 @@ public class DatabaseService {
         String cypher = "MATCH (u:User {username: $username}) " +
                         "OPTIONAL MATCH (u)-[:OWNS]->(c:Card) " +
                         "RETURN u.username AS username, u.fullName AS fullName, u.age AS age, " +
+                        "       u.gender AS gender, u.dob AS dob, " +
                         "       u.email AS email, u.phone AS phone, u.address AS address, " +
                         "       u.role AS role, c.ccNum AS ccNum";
         
@@ -105,6 +110,8 @@ public class DatabaseService {
                 profile.put("username", record.get("username").asString());
                 profile.put("fullName", record.get("fullName").isNull() ? "" : record.get("fullName").asString());
                 profile.put("age", record.get("age").isNull() ? 0 : record.get("age").asInt());
+                profile.put("gender", record.get("gender").isNull() ? "M" : record.get("gender").asString());
+                profile.put("dob", record.get("dob").isNull() ? "1990-01-01" : record.get("dob").asString());
                 profile.put("email", record.get("email").isNull() ? "" : record.get("email").asString());
                 profile.put("phone", record.get("phone").isNull() ? "" : record.get("phone").asString());
                 profile.put("address", record.get("address").isNull() ? "" : record.get("address").asString());

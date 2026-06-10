@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html class="dark" lang="fr">
 
@@ -218,7 +218,7 @@
                                     class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">mail</span>
                                 <input id="login-email" name="username"
                                     class="w-full pl-10 pr-4 py-3 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface focus:ring-2 focus:ring-secondary focus:border-transparent outline-none transition-all placeholder:text-outline/50"
-                                    placeholder="nom@banque.fr" type="email" required />
+                                    placeholder=nom@banque.ma" type="email" required />
                             </div>
                         </div>
                         <div class="space-y-xs">
@@ -261,7 +261,7 @@
                                 <label class="font-label-md text-label-md text-secondary uppercase">NOM COMPLET</label>
                                 <input id="register-fullname"
                                     class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
-                                    placeholder="Jean Dupont" type="text" required />
+                                    placeholder="Ahmed Benali" type="text" required />
                             </div>
                             <div class="space-y-xs">
                                 <label class="font-label-md text-label-md text-secondary uppercase">ÂGE</label>
@@ -270,24 +270,40 @@
                                     placeholder="25" type="number" required />
                             </div>
                         </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+                            <div class="space-y-xs">
+                                <label class="font-label-md text-label-md text-secondary uppercase">GENRE</label>
+                                <select id="register-gender"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all">
+                                    <option value="M">Homme</option>
+                                    <option value="F">Femme</option>
+                                </select>
+                            </div>
+                            <div class="space-y-xs">
+                                <label class="font-label-md text-label-md text-secondary uppercase">DATE DE NAISSANCE</label>
+                                <input id="register-dob"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    placeholder="1990-01-15" type="date" required />
+                            </div>
+                        </div>
                         <div class="space-y-xs">
                             <label class="font-label-md text-label-md text-secondary uppercase">E-MAIL</label>
                             <input id="register-email"
                                 class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
-                                placeholder="jean.dupont@finance.fr" type="email" required />
+                                placeholder="ahmed.benali@banque.ma" type="email" required />
                         </div>
                         <div class="space-y-xs">
                             <label class="font-label-md text-label-md text-secondary uppercase">NUMÉRO DE
                                 TÉLÉPHONE</label>
                             <input id="register-phone"
                                 class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
-                                placeholder="+33 6 12 34 56 78" type="tel" required />
+                                placeholder="+212 6 12 34 56 78" type="tel" required />
                         </div>
                         <div class="space-y-xs">
                             <label class="font-label-md text-label-md text-secondary uppercase">ADRESSE POSTALE</label>
                             <input id="register-address"
                                 class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
-                                placeholder="123 Avenue des Champs-Élysées, Paris" type="text" required />
+                                placeholder="123 Boulevard Mohammed V, Casablanca" type="text" required />
                         </div>
                         <div class="space-y-xs">
                             <label class="font-label-md text-label-md text-secondary uppercase">NUMÉRO DE CARTE
@@ -411,6 +427,8 @@
             const role = 'USER';
             const fullName = document.getElementById('register-fullname').value;
             const age = document.getElementById('register-age').value;
+            const gender = document.getElementById('register-gender').value;
+            const dob = document.getElementById('register-dob').value;
             const email = document.getElementById('register-email').value;
             const phone = document.getElementById('register-phone').value;
             const address = document.getElementById('register-address').value;
@@ -429,6 +447,8 @@
                         password: 'Password123!',
                         fullName: fullName,
                         age: parseInt(age),
+                        gender: gender,
+                        dob: dob,
                         email: email,
                         phone: phone,
                         address: address,

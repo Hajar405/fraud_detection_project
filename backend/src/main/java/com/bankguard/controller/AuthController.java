@@ -31,6 +31,8 @@ public class AuthController {
             String password = (String) payload.get("password");
             String fullName = (String) payload.get("fullName");
             int age = Integer.parseInt(payload.getOrDefault("age", "30").toString());
+            String gender = (String) payload.getOrDefault("gender", "M");
+            String dob = (String) payload.getOrDefault("dob", "1990-01-01");
             String email = (String) payload.get("email");
             String phone = (String) payload.get("phone");
             String address = (String) payload.get("address");
@@ -45,7 +47,7 @@ public class AuthController {
             String hashedPassword = passwordEncoder.encode(password);
 
             boolean success = databaseService.createUser(
-                username, hashedPassword, fullName, age, email, phone, address, cardNumber, role
+                username, hashedPassword, fullName, age, gender, dob, email, phone, address, cardNumber, role
             );
 
             if (success) {
