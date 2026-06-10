@@ -238,8 +238,7 @@
                                     type="checkbox" />
                                 <span class="text-body-md text-on-surface-variant">Se souvenir de moi</span>
                             </label>
-                            <a class="text-body-md font-semibold text-secondary hover:underline" href="#">Mot de passe
-                                oublié ?</a>
+                            <a class="text-body-md font-semibold text-secondary hover:underline cursor-pointer" id="forgot-password-link">Mot de passe oublié ?</a>
                         </div>
                         <button type="submit"
                             class="w-full bg-secondary text-surface-container-lowest py-lg rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-secondary-fixed active:scale-[0.98] transition-all shadow-lg shadow-secondary/10">
@@ -252,8 +251,7 @@
                 <div class="form-transition hidden-tab" id="register-section">
                     <div class="mb-lg">
                         <h2 class="font-headline-lg text-headline-lg text-on-surface">Créer un compte</h2>
-                        <p class="text-on-surface-variant mt-sm" id="register-subtitle">Rejoignez l'élite bancaire et
-                            sécurisez votre avenir dès aujourd'hui.</p>
+                        <p class="text-on-surface-variant mt-sm" id="register-subtitle">Créez votre compte pour protéger vos transactions dès aujourd'hui.</p>
                     </div>
                     <form class="space-y-md" id="register-form">
 
@@ -273,8 +271,7 @@
                             </div>
                         </div>
                         <div class="space-y-xs">
-                            <label class="font-label-md text-label-md text-secondary uppercase">E-MAIL
-                                PROFESSIONNEL</label>
+                            <label class="font-label-md text-label-md text-secondary uppercase">E-MAIL</label>
                             <input id="register-email"
                                 class="w-full px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
                                 placeholder="jean.dupont@finance.fr" type="email" required />
@@ -421,7 +418,7 @@
             const registerSubtitle = document.getElementById('register-subtitle');
 
             registerSubtitle.className = "text-on-surface-variant mt-sm";
-            registerSubtitle.innerText = "Rejoignez l'élite bancaire et sécurisez votre avenir dès aujourd'hui.";
+            registerSubtitle.innerText = "Créez votre compte pour protéger vos transactions dès aujourd'hui.";
 
             try {
                 const response = await fetch('/api/auth/register', {
@@ -450,7 +447,7 @@
                         document.getElementById('login-email').value = email;
                         document.getElementById('login-password').value = 'Password123!';
                         registerSubtitle.className = "text-on-surface-variant mt-sm";
-                        registerSubtitle.innerText = "Rejoignez l'élite bancaire et sécurisez votre avenir dès aujourd'hui.";
+                        registerSubtitle.innerText = "Créez votre compte pour protéger vos transactions dès aujourd'hui.";
                     }, 1500);
                 } else {
                     registerSubtitle.className = "text-error font-bold mt-sm";
@@ -482,6 +479,25 @@
 
         // Support hash change on the fly
         window.addEventListener('hashchange', handleHash);
+
+        // Forgot password handler
+        document.addEventListener('DOMContentLoaded', () => {
+            const forgotLink = document.getElementById('forgot-password-link');
+            if (forgotLink) {
+                forgotLink.addEventListener('click', () => {
+                    const email = document.getElementById('login-email').value.trim();
+                    const subtitle = document.querySelector('#login-section p');
+                    if (!email) {
+                        subtitle.className = 'text-error font-bold mt-sm';
+                        subtitle.innerText = 'Veuillez saisir votre adresse e-mail puis cliquer sur "Mot de passe oublié ?".';
+                        document.getElementById('login-email').focus();
+                        return;
+                    }
+                    subtitle.className = 'text-secondary font-bold mt-sm';
+                    subtitle.innerText = 'Si ce compte existe, un e-mail de réinitialisation a été envoyé à ' + email + '.';
+                });
+            }
+        });
     </script>
 </body>
 

@@ -101,7 +101,8 @@ async function handleFileUpload(file) {
                 pct += 5;
                 document.getElementById('progress-pct').innerText = `${pct}%`;
                 document.getElementById('progress-bar').style.width = `${pct}%`;
-                document.getElementById('status-label').innerText = "Calcul des features & XGBoost...";
+                document.getElementById('status-label').innerText = "Analyse des transactions en cours...";
+
             }
         }, 800);
 
@@ -125,7 +126,7 @@ async function handleFileUpload(file) {
         document.getElementById('progress-pct').innerText = "100%";
         document.getElementById('progress-bar').style.width = "100%";
         document.getElementById('progress-title').innerText = "Importation terminée";
-        document.getElementById('status-label').innerText = "Archivage Neo4j complété.";
+        document.getElementById('status-label').innerText = "Archivage terminé, résultats disponibles.";
 
         // Populate Session summary
         document.getElementById('parsed-count').innerText = data.totalParsed.toLocaleString();

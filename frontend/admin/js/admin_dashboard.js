@@ -249,7 +249,7 @@ function showDetailsModal(tx) {
                 <!-- Row 5: ML Prediction Insights -->
                 <div class="bg-surface-container-high/40 border border-white/5 p-md rounded-lg">
                     <h4 class="text-primary font-label-md text-xs uppercase tracking-wider mb-2 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">memory</span> XGBoost ML Intelligence
+                        <span class="material-symbols-outlined text-sm">analytics</span> Analyse IA
                     </h4>
                     <div class="grid grid-cols-2 gap-sm text-sm">
                         <div>
@@ -263,10 +263,10 @@ function showDetailsModal(tx) {
                     </div>
                 </div>
 
-                <!-- Row 6: Graph Security Signals (Neo4j) -->
+                <!-- Row 6: Graph Security Signals -->
                 <div class="bg-surface-container-high/40 border border-white/5 p-md rounded-lg">
                     <h4 class="text-secondary font-label-md text-xs uppercase tracking-wider mb-2 flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">hub</span> Neo4j Graph Security Signals
+                        <span class="material-symbols-outlined text-sm">hub</span> Signaux de Sécurité Graphe
                     </h4>
                     <div class="space-y-1.5 text-xs">
                         <div class="flex justify-between">

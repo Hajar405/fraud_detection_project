@@ -147,8 +147,8 @@ form.addEventListener('submit', async (e) => {
         } else {
             stateError.classList.remove('hidden');
             const reason = data.graphSignals?.graphRiskAdjustment > 0
-                ? 'Alerte de vitesse/historique suspect détecté par le graphe Neo4j.'
-                : 'Transaction classifiée comme hautement suspecte par l\'IA XGBoost.';
+                ? 'Activité inhabituelle détectée sur ce compte.'
+                : 'Cette transaction a été classée comme hautement suspecte.';
             document.querySelector('#state-error p').innerText =
                 `${reason} Score de risque : ${data.riskScore || 99}%`;
             mainCard.style.borderColor = 'rgba(255, 180, 171, 0.5)';
