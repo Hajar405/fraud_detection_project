@@ -7,7 +7,7 @@ from datetime import datetime
 
 # Setup endpoint
 BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8080/api/transactions/analyze")
-CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "models_a _utiliser", "sparkov_sample.csv")
+CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "models_a _utiliser", "morocco_sample.csv")
 
 def parse_line(line):
     parts = [p.strip() for p in line.strip().split(",")]
@@ -63,7 +63,7 @@ def parse_line(line):
 
 def stream_transactions():
     print(f"Starting real-time streaming transaction simulator...")
-    print(f"Reading Sparkov CSV from {CSV_PATH}")
+    print(f"Reading Morocco CSV from {CSV_PATH}")
     print(f"Forwarding transactions to {BACKEND_URL} every 5 seconds...")
     
     if not os.path.exists(CSV_PATH):
@@ -112,7 +112,7 @@ def stream_transactions():
                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 row["trans_date"] = current_time
                 
-                print(f"Sending transaction: Card {row['cc_num'][-4:]} | Merchant: {row['merchant']} | Amount: {row['amt']} €")
+                print(f"Sending transaction: Card {row['cc_num'][-4:]} | Merchant: {row['merchant']} | Amount: {row['amt']} MAD")
                 
                 try:
                     res = requests.post(BACKEND_URL, json=row, timeout=5)
