@@ -70,7 +70,7 @@ def stream_transactions():
         print(f"❌ Error: CSV file not found at {CSV_PATH}")
         return
 
-    STATUS_URL = os.getenv("STATUS_URL", "http://backend:8080/api/transactions/streaming/status")
+    STATUS_URL = os.getenv("STATUS_URL", "http://backend:8080/api/admin/streaming/status")
 
     while True:
         try:

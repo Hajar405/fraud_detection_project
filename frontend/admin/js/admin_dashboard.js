@@ -149,7 +149,7 @@ function createRowElement(tx) {
         </td>
         <td class="px-lg py-4 font-label-md text-label-md text-on-surface-variant">**** **** **** ${tx.ccNum ? tx.ccNum.slice(-4) : 'XXXX'}</td>
         <td class="px-lg py-4 font-body-md text-on-surface">${tx.merchant}</td>
-        <td class="px-lg py-4 font-label-md text-label-md font-bold ${isFraud ? 'text-error' : 'text-primary'}">${tx.amt.toFixed(2)} €</td>
+        <td class="px-lg py-4 font-label-md text-label-md font-bold ${isFraud ? 'text-error' : 'text-primary'}">${tx.amt.toFixed(2)} MAD</td>
         <td class="px-lg py-4">${statusSpan}</td>
         <td class="px-lg py-4 text-right">
             <div class="flex justify-end gap-xs opacity-40 group-hover:opacity-100 transition-opacity">
@@ -208,7 +208,7 @@ function showDetailsModal(tx) {
                 <div class="grid grid-cols-2 gap-md items-center">
                     <div>
                         <span class="text-outline font-label-sm text-[10px] uppercase">Montant</span>
-                        <div class="text-2xl font-bold font-headline-sm text-primary mt-1">${tx.amt.toFixed(2)} €</div>
+                        <div class="text-2xl font-bold font-headline-sm text-primary mt-1">${tx.amt.toFixed(2)} MAD</div>
                     </div>
                     <div>
                         <span class="text-outline font-label-sm text-[10px] uppercase">Statut Décision</span>

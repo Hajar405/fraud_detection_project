@@ -195,6 +195,8 @@ form.addEventListener('submit', async (e) => {
             stateSuccess.classList.remove('hidden');
             document.querySelector('#state-success p').innerText =
                 `Aucune anomalie détectée par l'IA. Score de risque : ${data.riskScore}%`;
+            const successScores = document.getElementById('success-scores');
+            if (successScores) successScores.innerText = `Certitude : ${data.confidenceScore ?? '--'}%`;
             mainCard.style.borderColor = 'rgba(78, 222, 163, 0.5)';
             mainCard.style.boxShadow   = '0 0 20px rgba(78, 222, 163, 0.2)';
         } else {
@@ -204,6 +206,8 @@ form.addEventListener('submit', async (e) => {
                 : 'Cette transaction a été classée comme hautement suspecte.';
             document.querySelector('#state-error p').innerText =
                 `${reason} Score de risque : ${data.riskScore || 99}%`;
+            const errorScores = document.getElementById('error-scores');
+            if (errorScores) errorScores.innerText = `Certitude : ${data.confidenceScore ?? '--'}%`;
             mainCard.style.borderColor = 'rgba(255, 180, 171, 0.5)';
             mainCard.style.boxShadow   = '0 0 20px rgba(255, 180, 171, 0.2)';
         }

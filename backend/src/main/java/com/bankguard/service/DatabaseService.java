@@ -52,19 +52,19 @@ public class DatabaseService {
                         "RETURN u.username AS username";
         
         try (Session session = neo4jDriver.session()) {
-            var result = session.run(cypher, Map.of(
-                "username", username,
-                "password", hashedPassword,
-                "fullName", fullName,
-                "age", age,
-                "gender", gender,
-                "dob", dob,
-                "email", email,
-                "phone", phone,
-                "address", address,
-                "cardNumber", cardNumber,
-                "role", role
-            ));
+            Map<String, Object> params = new HashMap<>();
+            params.put("username", username);
+            params.put("password", hashedPassword);
+            params.put("fullName", fullName);
+            params.put("age", age);
+            params.put("gender", gender);
+            params.put("dob", dob);
+            params.put("email", email);
+            params.put("phone", phone);
+            params.put("address", address);
+            params.put("cardNumber", cardNumber);
+            params.put("role", role);
+            var result = session.run(cypher, params);
             return result.hasNext();
         } catch (Exception e) {
             System.err.println("Error creating user: " + e.getMessage());

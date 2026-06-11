@@ -184,7 +184,7 @@ async function handleFileUpload(file) {
             row.innerHTML = `
                 <td class="px-lg py-4 font-label-md text-primary">#TXN-${tx.id.slice(0, 8).toUpperCase()}</td>
                 <td class="px-lg py-4 text-on-surface-variant">${tx.transDate}</td>
-                <td class="px-lg py-4 text-on-surface">${tx.amt.toFixed(2)} €</td>
+                <td class="px-lg py-4 text-on-surface">${tx.amt.toFixed(2)} MAD</td>
                 <td class="px-lg py-4">
                     <div class="flex items-center gap-2">
                         <div class="w-12 h-1.5 bg-surface-container rounded-full overflow-hidden">

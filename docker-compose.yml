@@ -61,7 +61,7 @@ services:
     networks:
       - bankguard-network
 
-  # 5. Real-Time Sparkov Streaming Simulator
+  # 5. Real-Time Morocco Streaming Simulator
   streaming:
     build:
       context: ./streaming
@@ -69,8 +69,10 @@ services:
     container_name: bankguard-streaming
     environment:
       - BACKEND_URL=http://backend:8080/api/transactions/analyze
+      - STATUS_URL=http://backend:8080/api/admin/streaming/status
     volumes:
       - ./models_a _utiliser:/models_a _utiliser
+      - ./streaming/streaming_simulator.py:/app/streaming_simulator.py
     depends_on:
       - backend
     networks:

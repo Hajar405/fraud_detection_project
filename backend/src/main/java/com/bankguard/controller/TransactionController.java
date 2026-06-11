@@ -27,6 +27,9 @@ public class TransactionController {
     @Value("${ml.sidecar.url:http://localhost:5000/predict}")
     private String mlSidecarUrl;
 
+    @Value("${ml.fraud.threshold:29.62}")
+    private double fraudThreshold;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     @PostMapping("/analyze")
@@ -81,7 +84,7 @@ public class TransactionController {
             // Augment prediction using Graph Signals
             if (graphRiskAdjustment > 0.0) {
                 riskScore = Math.min(100.0, riskScore + graphRiskAdjustment);
-                if (riskScore >= 29.62) { // dynamic update threshold
+                if (riskScore >= fraudThreshold) {
                     isFraud = true;
                 }
             }
@@ -108,12 +111,12 @@ public class TransactionController {
             wsPayload.put("graphSignals", graphSignals);
             wsPayload.put("fullName", fullName);
 
-            // Global real-time stream
-            messagingTemplate.convertAndSend("/topic/transactions", wsPayload);
-
-            if (isFraud) {
-                // High-priority global alerts stream
-                messagingTemplate.convertAndSend("/topic/alerts", wsPayload);
+            // Global real-time stream (respecte le flag streaming admin)
+            if (databaseService.isStreamingEnabled()) {
+                messagingTemplate.convertAndSend("/topic/transactions", wsPayload);
+                if (isFraud) {
+                    messagingTemplate.convertAndSend("/topic/alerts", wsPayload);
+                }
             }
 
             // Return response
@@ -132,11 +135,6 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", e.getMessage()));
         }
-    }
-
-    @GetMapping("/streaming/status")
-    public ResponseEntity<?> getStreamingStatus() {
-        return ResponseEntity.ok(Map.of("enabled", databaseService.isStreamingEnabled()));
     }
 
     @GetMapping("/history")
@@ -311,6 +309,24 @@ public class TransactionController {
                         transId, ccNum, amt, transDate, merchant, category, state, city,
                         gender, 30, lat, lon, merchLat, merchLon, isFraud, riskScore
                     );
+
+                    // Diffuser via WebSocket uniquement si le streaming est actif
+                    if (databaseService.isStreamingEnabled()) {
+                        Map<String, Object> batchWsPayload = new HashMap<>();
+                        batchWsPayload.put("id", transId);
+                        batchWsPayload.put("ccNum", ccNum);
+                        batchWsPayload.put("amt", amt);
+                        batchWsPayload.put("transDate", transDate);
+                        batchWsPayload.put("merchant", merchant);
+                        batchWsPayload.put("category", category);
+                        batchWsPayload.put("isFraud", isFraud);
+                        batchWsPayload.put("riskScore", riskScore);
+                        batchWsPayload.put("fullName", databaseService.getUserNameByCard(ccNum));
+                        messagingTemplate.convertAndSend("/topic/transactions", batchWsPayload);
+                        if (isFraud) {
+                            messagingTemplate.convertAndSend("/topic/alerts", batchWsPayload);
+                        }
+                    }
 
                     totalCount++;
                     if (isFraud) {

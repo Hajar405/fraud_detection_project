@@ -27,9 +27,11 @@ public class BankGuardApplication {
                     hashedPassword,
                     "System Administrator",
                     40,
+                    "M",
+                    "1984-01-01",
                     adminUsername,
-                    "+33 1 00 00 00 00",
-                    "BankGuard Paris Office",
+                    "+212 5 22 00 00 00",
+                    "FraudGuard AI, Casablanca",
                     "0000000000000000",
                     "ADMIN"
                 );
