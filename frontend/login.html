@@ -293,6 +293,27 @@
                                 placeholder="ahmed.benali@banque.ma" type="email" required />
                         </div>
                         <div class="space-y-xs">
+                            <label class="font-label-md text-label-md text-secondary uppercase">MOT DE PASSE</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">lock</span>
+                                <input id="register-password"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    placeholder="••••••••" type="password" required minlength="6" />
+                            </div>
+                            <p class="text-xs text-on-surface-variant mt-1">Minimum 6 caractères</p>
+                        </div>
+                        <div class="space-y-xs">
+                            <label class="font-label-md text-label-md text-secondary uppercase">CONFIRMER LE MOT DE PASSE</label>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-md">lock</span>
+                                <input id="register-password-confirm"
+                                    class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-high text-on-surface outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    placeholder="••••••••" type="password" required minlength="6" />
+                            </div>
+                        </div>
+                        <div class="space-y-xs">
                             <label class="font-label-md text-label-md text-secondary uppercase">NUMÉRO DE
                                 TÉLÉPHONE</label>
                             <input id="register-phone"
@@ -376,6 +397,27 @@
             });
         });
 
+        // Validation en temps réel pour la confirmation du mot de passe
+        const passwordInput = document.getElementById('register-password');
+        const passwordConfirmInput = document.getElementById('register-password-confirm');
+        
+        function validatePasswordMatch() {
+            if (passwordInput.value && passwordConfirmInput.value) {
+                if (passwordInput.value === passwordConfirmInput.value) {
+                    passwordConfirmInput.style.borderColor = '#4edea3';
+                } else {
+                    passwordConfirmInput.style.borderColor = '#ffb4ab';
+                }
+            } else {
+                passwordConfirmInput.style.borderColor = '';
+            }
+        }
+        
+        if (passwordInput && passwordConfirmInput) {
+            passwordInput.addEventListener('input', validatePasswordMatch);
+            passwordConfirmInput.addEventListener('input', validatePasswordMatch);
+        }
+
         // Handle Login API flow
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -430,10 +472,25 @@
             const gender = document.getElementById('register-gender').value;
             const dob = document.getElementById('register-dob').value;
             const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const passwordConfirm = document.getElementById('register-password-confirm').value;
             const phone = document.getElementById('register-phone').value;
             const address = document.getElementById('register-address').value;
             const cardNumber = document.getElementById('register-cardnumber').value;
             const registerSubtitle = document.getElementById('register-subtitle');
+
+            // Validation du mot de passe
+            if (password !== passwordConfirm) {
+                registerSubtitle.className = "text-error font-bold mt-sm";
+                registerSubtitle.innerText = "Les mots de passe ne correspondent pas.";
+                return;
+            }
+
+            if (password.length < 6) {
+                registerSubtitle.className = "text-error font-bold mt-sm";
+                registerSubtitle.innerText = "Le mot de passe doit contenir au moins 6 caractères.";
+                return;
+            }
 
             registerSubtitle.className = "text-on-surface-variant mt-sm";
             registerSubtitle.innerText = "Créez votre compte pour protéger vos transactions dès aujourd'hui.";
@@ -444,7 +501,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         username: email,
-                        password: 'Password123!',
+                        password: password,
                         fullName: fullName,
                         age: parseInt(age),
                         gender: gender,
@@ -465,7 +522,7 @@
                     setTimeout(() => {
                         switchForm('login');
                         document.getElementById('login-email').value = email;
-                        document.getElementById('login-password').value = 'Password123!';
+                        document.getElementById('login-password').value = password;
                         registerSubtitle.className = "text-on-surface-variant mt-sm";
                         registerSubtitle.innerText = "Créez votre compte pour protéger vos transactions dès aujourd'hui.";
                     }, 1500);

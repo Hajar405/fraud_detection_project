@@ -32,6 +32,12 @@ if (navDashboard) {
     });
 }
 
+// ── Utility: format amount in USD ────────────────────────────────────────────
+function formatAmountUSD(amount) {
+    // Toujours afficher en dollars sans conversion
+    return `${amount.toFixed(2)} $`;
+}
+
 // ── Utility: mask card number ─────────────────────────────────────────────────
 function maskCardNumber(card) {
     if (!card) return 'INCONNUE';
@@ -84,7 +90,7 @@ function appendRow(tx, prepend = true) {
 
     const amtCell = document.createElement('td');
     amtCell.className = 'px-lg py-4 font-label-md text-label-md';
-    amtCell.innerText = `-${tx.amt.toFixed(2)} €`;
+    amtCell.innerText = `-${formatAmountUSD(tx.amt)}`;
 
     const statusCell = document.createElement('td');
     statusCell.className = 'px-lg py-4';

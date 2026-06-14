@@ -106,6 +106,12 @@ function prependTransactionRow(tx) {
     fetchStats();
 }
 
+// Utility: format amount in USD
+function formatAmountUSD(amount) {
+    // Toujours afficher en dollars sans conversion
+    return `${amount.toFixed(2)} $`;
+}
+
 // Helper to create table row element
 function createRowElement(tx) {
     const row = document.createElement('tr');
@@ -149,7 +155,7 @@ function createRowElement(tx) {
         </td>
         <td class="px-lg py-4 font-label-md text-label-md text-on-surface-variant">**** **** **** ${tx.ccNum ? tx.ccNum.slice(-4) : 'XXXX'}</td>
         <td class="px-lg py-4 font-body-md text-on-surface">${tx.merchant}</td>
-        <td class="px-lg py-4 font-label-md text-label-md font-bold ${isFraud ? 'text-error' : 'text-primary'}">${tx.amt.toFixed(2)} MAD</td>
+        <td class="px-lg py-4 font-label-md text-label-md font-bold ${isFraud ? 'text-error' : 'text-primary'}">${formatAmountUSD(tx.amt)}</td>
         <td class="px-lg py-4">${statusSpan}</td>
         <td class="px-lg py-4 text-right">
             <div class="flex justify-end gap-xs opacity-40 group-hover:opacity-100 transition-opacity">
@@ -208,7 +214,7 @@ function showDetailsModal(tx) {
                 <div class="grid grid-cols-2 gap-md items-center">
                     <div>
                         <span class="text-outline font-label-sm text-[10px] uppercase">Montant</span>
-                        <div class="text-2xl font-bold font-headline-sm text-primary mt-1">${tx.amt.toFixed(2)} MAD</div>
+                        <div class="font-headline-sm text-primary mt-1">${formatAmountUSD(tx.amt)}</div>
                     </div>
                     <div>
                         <span class="text-outline font-label-sm text-[10px] uppercase">Statut Décision</span>
@@ -402,15 +408,10 @@ async function fetchStats() {
                 if (normalPctLabel) normalPctLabel.innerText = `${normalPct.toFixed(1)}%`;
                 if (normalPctBar) normalPctBar.style.width = `${normalPct}%`;
                 
-                const suspectPctLabel = document.getElementById('suspect-pct-label');
-                const suspectPctBar = document.getElementById('suspect-pct-bar');
-                if (suspectPctLabel) suspectPctLabel.innerText = `${(fraudPct * 0.7).toFixed(1)}%`;
-                if (suspectPctBar) suspectPctBar.style.width = `${fraudPct * 0.7}%`;
-                
-                const critiquePctLabel = document.getElementById('critique-pct-label');
-                const critiquePctBar = document.getElementById('critique-pct-bar');
-                if (critiquePctLabel) critiquePctLabel.innerText = `${(fraudPct * 0.3).toFixed(1)}%`;
-                if (critiquePctBar) critiquePctBar.style.width = `${fraudPct * 0.3}%`;
+                const fraudPctLabel = document.getElementById('suspect-pct-label'); // réutilisation de l'ID suspect pour fraude
+                const fraudPctBar = document.getElementById('suspect-pct-bar');
+                if (fraudPctLabel) fraudPctLabel.innerText = `${fraudPct.toFixed(1)}%`;
+                if (fraudPctBar) fraudPctBar.style.width = `${fraudPct}%`;
             }
         }
     } catch (err) {

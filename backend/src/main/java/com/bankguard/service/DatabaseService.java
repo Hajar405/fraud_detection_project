@@ -15,7 +15,7 @@ public class DatabaseService {
     @Autowired
     private Driver neo4jDriver;
 
-    private boolean streamingEnabled = true;
+    private volatile boolean streamingEnabled = true;
 
     public boolean isStreamingEnabled() {
         return streamingEnabled;
@@ -23,7 +23,13 @@ public class DatabaseService {
 
     public boolean toggleStreaming() {
         streamingEnabled = !streamingEnabled;
+        System.out.println("Streaming status changed to: " + (streamingEnabled ? "ENABLED" : "DISABLED"));
         return streamingEnabled;
+    }
+    
+    public void setStreaming(boolean enabled) {
+        streamingEnabled = enabled;
+        System.out.println("Streaming manually set to: " + (streamingEnabled ? "ENABLED" : "DISABLED"));
     }
 
     // Initialize Database constraints at startup to guarantee fast unique index lookups

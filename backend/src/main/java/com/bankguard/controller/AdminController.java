@@ -57,6 +57,19 @@ public class AdminController {
     @PostMapping("/streaming/toggle")
     public ResponseEntity<?> toggleStreaming() {
         boolean status = databaseService.toggleStreaming();
-        return ResponseEntity.ok(Map.of("enabled", status));
+        return ResponseEntity.ok(Map.of("enabled", status, "message", 
+            status ? "Streaming activated" : "Streaming stopped"));
+    }
+    
+    @PostMapping("/streaming/stop")
+    public ResponseEntity<?> stopStreaming() {
+        databaseService.setStreaming(false);
+        return ResponseEntity.ok(Map.of("enabled", false, "message", "Streaming force stopped"));
+    }
+    
+    @PostMapping("/streaming/start")
+    public ResponseEntity<?> startStreaming() {
+        databaseService.setStreaming(true);
+        return ResponseEntity.ok(Map.of("enabled", true, "message", "Streaming force started"));
     }
 }

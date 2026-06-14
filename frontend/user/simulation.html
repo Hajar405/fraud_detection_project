@@ -187,7 +187,6 @@
                                 <h3 class="font-headline-md text-secondary">Transaction Validée</h3>
                                 <p class="text-on-surface-variant font-body-md mt-2">Aucune anomalie détectée par l'IA.
                                 </p>
-                                <p id="success-scores" class="text-secondary font-label-md text-xs mt-2"></p>
                             </div>
                             <button
                                 class="mt-4 px-6 py-2 border border-secondary/30 text-secondary rounded-lg hover:bg-secondary/10 transition-colors font-label-md"
@@ -203,7 +202,6 @@
                                 <h3 class="font-headline-md text-error">Alerte de Fraude Détectée</h3>
                                 <p class="text-on-surface-variant font-body-md mt-2">Activité suspecte identifiée sur ce
                                     compte.</p>
-                                <p id="error-scores" class="text-error font-label-md text-xs mt-2"></p>
                             </div>
                             <button
                                 class="mt-4 px-6 py-2 border border-error/30 text-error rounded-lg hover:bg-error/10 transition-colors font-label-md"
@@ -267,9 +265,9 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block font-label-md text-label-md text-outline mb-1">Montant (MAD)</label>
+                            <label class="block font-label-md text-label-md text-outline mb-1">Montant ($)</label>
                             <div class="relative">
-                                <span class="material-symbols-outlined absolute left-3 top-3 text-outline">payments</span>
+                                <span class="material-symbols-outlined absolute left-3 top-3 text-outline">attach_money</span>
                                 <input id="sim-amount"
                                     class="w-full bg-background border border-outline-variant/30 rounded-lg font-label-md text-label-md py-3 pl-10 pr-4 focus:border-primary outline-none transition-all"
                                     placeholder="0.00" required type="number" step="0.01">

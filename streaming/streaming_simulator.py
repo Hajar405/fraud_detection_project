@@ -7,7 +7,7 @@ from datetime import datetime
 
 # Setup endpoint
 BACKEND_URL = os.getenv("BACKEND_URL", "http://backend:8080/api/transactions/analyze")
-CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "models_a _utiliser", "morocco_sample.csv")
+CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "models_a _utiliser", "sparkov_sample.csv")
 
 def parse_line(line):
     parts = [p.strip() for p in line.strip().split(",")]
@@ -63,7 +63,7 @@ def parse_line(line):
 
 def stream_transactions():
     print(f"Starting real-time streaming transaction simulator...")
-    print(f"Reading Morocco CSV from {CSV_PATH}")
+    print(f"Reading Sparkov CSV from {CSV_PATH}")
     print(f"Forwarding transactions to {BACKEND_URL} every 5 seconds...")
     
     if not os.path.exists(CSV_PATH):
@@ -82,27 +82,18 @@ def stream_transactions():
             random.shuffle(data_lines) # Shuffle transactions for realistic stream
             
             for line in data_lines:
-                # Check status first
-                is_enabled = True
-                while True:
-                    try:
-                        status_res = requests.get(STATUS_URL, timeout=5)
-                        if status_res.ok:
-                            is_enabled = status_res.json().get("enabled", True)
-                            if not is_enabled:
-                                print("Streaming paused by admin. Waiting 5 seconds...")
-                                time.sleep(5)
-                                continue # loop back to check again
-                            else:
-                                break # enabled, break out of while loop
-                        else:
-                            break # if error getting status, assume enabled
-                    except Exception as e:
-                        print(f"⚠️ Could not check streaming status: {e}")
-                        break # if error, assume enabled
-
-                if not is_enabled:
-                    continue # safety catch
+                # Check status first - if disabled, wait longer and skip processing
+                try:
+                    status_res = requests.get(STATUS_URL, timeout=5)
+                    if status_res.ok:
+                        is_enabled = status_res.json().get("enabled", True)
+                        if not is_enabled:
+                            print("Streaming disabled by admin. Waiting 10 seconds before checking again...")
+                            time.sleep(10)
+                            continue # skip to next iteration of the main for loop
+                except Exception as e:
+                    print(f"⚠️ Could not check streaming status: {e}")
+                    # If can't check status, assume enabled and continue
 
                 row = parse_line(line)
                 if not row:
@@ -112,7 +103,7 @@ def stream_transactions():
                 current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 row["trans_date"] = current_time
                 
-                print(f"Sending transaction: Card {row['cc_num'][-4:]} | Merchant: {row['merchant']} | Amount: {row['amt']} MAD")
+                print(f"Sending transaction: Card {row['cc_num'][-4:]} | Merchant: {row['merchant']} | Amount: {row['amt']} $")
                 
                 try:
                     res = requests.post(BACKEND_URL, json=row, timeout=5)

@@ -194,20 +194,15 @@ form.addEventListener('submit', async (e) => {
         } else if (response.ok && data.isFraud === false) {
             stateSuccess.classList.remove('hidden');
             document.querySelector('#state-success p').innerText =
-                `Aucune anomalie détectée par l'IA. Score de risque : ${data.riskScore}%`;
-            const successScores = document.getElementById('success-scores');
-            if (successScores) successScores.innerText = `Certitude : ${data.confidenceScore ?? '--'}%`;
+                `Transaction acceptée et validée.`;
             mainCard.style.borderColor = 'rgba(78, 222, 163, 0.5)';
             mainCard.style.boxShadow   = '0 0 20px rgba(78, 222, 163, 0.2)';
         } else {
             stateError.classList.remove('hidden');
             const reason = data.graphSignals?.graphRiskAdjustment > 0
-                ? 'Activité inhabituelle détectée sur ce compte.'
-                : 'Cette transaction a été classée comme hautement suspecte.';
-            document.querySelector('#state-error p').innerText =
-                `${reason} Score de risque : ${data.riskScore || 99}%`;
-            const errorScores = document.getElementById('error-scores');
-            if (errorScores) errorScores.innerText = `Certitude : ${data.confidenceScore ?? '--'}%`;
+                ? 'Transaction refusée pour activité inhabituelle.'
+                : 'Transaction refusée pour suspicion de fraude.';
+            document.querySelector('#state-error p').innerText = reason;
             mainCard.style.borderColor = 'rgba(255, 180, 171, 0.5)';
             mainCard.style.boxShadow   = '0 0 20px rgba(255, 180, 171, 0.2)';
         }

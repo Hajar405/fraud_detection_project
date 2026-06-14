@@ -91,8 +91,11 @@ def predict():
             # Fallback to realistic age range
             age = int(np.clip(age, 18, 90))
         
-        # 3. Preprocess Amount (Winsorization limits: 1.26 to 545.99)
+        # 3. Preprocess Amount
         amt = float(data.get("amt", 0.0))
+        category_name = str(data.get("category", "")).lower()
+            
+        # Standard Winsorization for model input (1.26 to 545.99)
         amt_clipped = np.clip(amt, 1.26, 545.99)
         amt_log = float(np.log1p(amt_clipped))
         
@@ -223,8 +226,32 @@ def predict():
         # 5. Compute Distance KM
         distance_km = float(haversine_km(lat, lon, merch_lat, merch_lon))
         
-        # 6. Combined Outlier Check (amt_p90 = 136.67, dist_p90 = 112.82)
-        combined_outlier = int(amt > 136.67 and distance_km > 112.82)
+        # 6. Combined Outlier Check with Category-Specific Thresholds (USD)
+        category_thresholds = {
+            "entertainment": 200.0,
+            "food_dining": 150.0,
+            "gas_transport": 100.0,
+            "grocery_net": 300.0,
+            "shopping_net": 500.0,
+            "personal_care": 150.0,
+            "health_fitness": 250.0,
+            "travel": 1000.0
+        }
+        
+        # Extreme amount thresholds by category
+        extreme_thresholds = {
+            "entertainment": 2000.0,
+            "food_dining": 1500.0,
+            "gas_transport": 1000.0,
+            "grocery_net": 3000.0,
+            "shopping_net": 5000.0,
+            "personal_care": 1500.0,
+            "health_fitness": 2500.0,
+            "travel": 10000.0
+        }
+        
+        category_threshold = category_thresholds.get(category_name, 200.0)  # default threshold
+        combined_outlier = int(amt > category_threshold and distance_km > 112.82)
         
         # 7. Label Encoding with Robust Auto-Correction
         encoded_features = {}
@@ -276,16 +303,25 @@ def predict():
         # Convert to Pandas DataFrame to preserve column names order for XGBoost
         features_df = pd.DataFrame([features_dict])
         
-        # 8. Run Model Inference
+        # 9. Run Model Inference
         proba = float(model.predict_proba(features_df)[0, 1])
-        is_fraud = bool(proba >= threshold_final)
+        
+        # Check for extreme amounts by category and adjust probability
+        extreme_threshold = extreme_thresholds.get(category_name, 2000.0)  # default extreme threshold
+        if amt > extreme_threshold:
+            proba = max(proba, 0.6)  # Force minimum 60% probability for extreme amounts
+        
+        # Fixed threshold at 50%
+        threshold_adjusted = 0.5
+            
+        is_fraud = bool(proba >= threshold_adjusted)
         risk_score = float(round(proba * 100, 2))
         
         # Calculate Confidence Score: 0 to 100 scale representing prediction certainty
         if is_fraud:
-            confidence = (proba - threshold_final) / (1.0 - threshold_final)
+            confidence = (proba - threshold_adjusted) / (1.0 - threshold_adjusted)
         else:
-            confidence = (threshold_final - proba) / threshold_final
+            confidence = (threshold_adjusted - proba) / threshold_adjusted
         confidence_score = float(round(confidence * 100, 2))
         
         return jsonify({
